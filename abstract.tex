@@ -1,5 +1,7 @@
 \begin{abstract}
 
-The abstract of the project report
+An octree is a structure which partitions a 3D space into octants recursively based on positions of objects within the domain. This structure is heavily utilized in scientific simulation, computer graphics, and collision detection. A classical use case of an octree is in the field of particle simulations such as those involving short or long range forces where the number of particles required is large enough to become prohibitive for the simulation. 
+
+Recent works have expanded upon traditional octree construction methods to allow for distributed simulation termed Locally Essential Trees (LETs) as well as how to effectively parallelize their construction. We explore and benchmark a novel method called Cornerstone that not only utilizes these methods but develops a construction method that allows an octree to be rebalanced which is favorable for particle simulations or any problem which expresses perturbations of the positions of represented objects.
 
 \end{abstract}
