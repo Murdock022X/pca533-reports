@@ -1,10 +1,12 @@
 \section{Cornerstone}
 \label{sec:cornerstone}
 
+To characterize Cornerstone's performance we first need to understand the steps it takes to calculate an octree or in the case of a distributed locally essential tree how it subdivides the domain and calculates the focused octree.
+
 \begin{figure}[h!] % The 'figure' environment manages the image as a float
     \centering % Centers the image on the page
-    \includegraphics[width=0.4\textwidth]{assets/leaves_morton.png} % Includes the image and sets the width
-    \caption{A descriptive caption for the image.} % Adds a caption below the image
+    \includegraphics[width=0.45\textwidth]{assets/leaves_morton.png} % Includes the image and sets the width
+    \caption{The leaves of an octree colored with respect to their Morton curve. The red trace plots the Morton curve path through the leaves.} % Adds a caption below the image
     \label{fig:morton_leaves} % Allows you to reference the figure in your text
 \end{figure}
 
@@ -12,8 +14,8 @@ As you can see in Figure \ref{fig:morton_leaves}, this is how you include an ima
 
 \begin{figure}[h!] % The 'figure' environment manages the image as a float
     \centering % Centers the image on the page
-    \includegraphics[width=0.4\textwidth]{assets/leaves_hilbert.png} % Includes the image and sets the width
-    \caption{A descriptive caption for the image.} % Adds a caption below the image
+    \includegraphics[width=0.45\textwidth]{assets/leaves_hilbert.png} % Includes the image and sets the width
+    \caption{The leaves of an octree colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves.} % Adds a caption below the image
     \label{fig:hilbert_leaves} % Allows you to reference the figure in your text
 \end{figure}
 

@@ -1,9 +1,12 @@
 \section{Project Status}
 
 \subsection{Code}
+We have created the necessary Jupyter notebooks and python scripts to generate distributions of interest and their perturbations. This includes code to save those distributions to HDF5 files. We developed a framework in C++ for loading those HDF5 distributions and their perturbations and generating the corresponding octrees, adding the perturbations to the particles and then rebalancing the octree. This allows us to observe the effects of the initial construction as well as across varying magnitudes of perturbations. This will be important in developing our final report as it will be important to show how varying magnitudes of perturbations generate correlate to the rebalancing time for trees. This relates to Cornerstone's flagship feature which is allowing rebalancing rather than rebuilding. 
 
 \subsection{Machines}
+Currently we have used \href{https://www.cloudlab.us/}{CloudLab} to gain access to GPUs allowing us to get preliminary results on a node with 4 V100s; however, access to this is difficult to attain on a regular basis, and hence we are hoping to obtain access to NCSA's Delta cluster in the coming weeks as this should allow better availability.
 
 \subsection{Algorithms}
+
 
 \subsection{Results}
