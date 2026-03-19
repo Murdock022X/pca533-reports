@@ -1,0 +1,267 @@
+\section{Cornerstone Analysis}
+\label{sec:analysis}
+
+To evaluate the Cornerstone octree construction method under realistic conditions, we developed a configurable batch generation pipeline (\texttt{run\_batches}) that sweeps over a matrix of particle distributions, particle counts, and perturbation magnitudes. Particles that leave the domain after perturbation are truncated back to the boundary.
+
+\subsection{Distribution Generators}
+
+Six initial particle distributions are used:
+
+\begin{enumerate}
+    \item \textbf{\texttt{uniform\_initial}}: Samples $n$ particles uniformly from the cube $[-1,1]^3$. A homogeneous baseline.
+    \item \textbf{\texttt{pancake\_initial}}: A distribution where one axis is strongly compressed, resembling a disk or frisbee.
+    \item \textbf{\texttt{pancake\_initial\_tilted}}: Same as the pancake but rotated off-axis, so the thin dimension is no longer aligned with a coordinate plane.
+    \item \textbf{\texttt{filament\_z\_initial}}: A one-dimensional filament aligned along the $z$-axis.
+    \item \textbf{\texttt{filament\_yz\_initial}}: A filament lying in the $yz$-plane, anisotropic in two directions.
+    \item \textbf{\texttt{filament\_xyz\_initial}}: A filament oriented along the body diagonal, anisotropic in all three coordinate directions simultaneously.
+\end{enumerate}
+
+\subsection{Perturbation Model}
+
+After the initial distribution is generated, a perturbation vector is applied to simulate particle motion between timesteps. The perturbation function draws each displacement component independently from $\mathcal{U}(-s, +s)$ where $s$ is the scale factor. Particles that move outside the domain after perturbation are truncated to the boundary (\texttt{out\_of\_bounds = `truncate'}). Four perturbation scales are used:
+
+\begin{itemize}
+    \item $s = 0.001$: Very small perturbation; particles barely move relative to the domain.
+    \item $s = 0.01$\phantom{0}: Moderate perturbation; noticeable displacement but locally coherent.
+    \item $s = 0.1$\phantom{00}: Large perturbation; significant displacement triggering substantial tree restructuring.
+    \item $s = 0.5$\phantom{00}: Very large perturbation; particles may traverse a large fraction of the domain.
+\end{itemize}
+
+\subsection{Runtime Configuration}
+
+The Cornerstone framework accepts several runtime parameters via the command line:
+
+\begin{itemize}
+    \item \texttt{--bucket-size-global}: Maximum number of particles per leaf node in the global octree (default: 1024).
+    \item \texttt{--bucket-size-focus}: Maximum number of particles per leaf node in the focused octree (default: 64).
+    \item \texttt{--theta}: The multipole acceptance criterion (MAC) parameter controlling the accuracy/performance tradeoff (default: 0.6).
+    \item \texttt{--gpu}: Flag to enable GPU-accelerated octree construction.
+\end{itemize}
+
+No rotations were applied (\texttt{rotations = None}).
+
+\subsection{Test Configurations}
+
+The full sweep comprises $6$ distributions $\times$ $5$ particle counts $\times$ $4$ perturbation scales $= 120$ configurations.
+
+% --- Uniform ---
+\begin{table*}[ht]
+    \centering
+    \caption{\texttt{uniform\_initial} results.}
+    \label{tab:uniform_results}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{$N$} & \textbf{Scale} & \textbf{Build (ms)} & \textbf{Rebalance (ms)} & \textbf{Depth} \\
+        \hline
+        $10^4$ & $0.001$ & & & \\
+        $10^4$ & $0.01$  & & & \\
+        $10^4$ & $0.1$   & & & \\
+        $10^4$ & $0.5$   & & & \\
+        \hline
+        $10^5$ & $0.001$ & & & \\
+        $10^5$ & $0.01$  & & & \\
+        $10^5$ & $0.1$   & & & \\
+        $10^5$ & $0.5$   & & & \\
+        \hline
+        $10^6$ & $0.001$ & & & \\
+        $10^6$ & $0.01$  & & & \\
+        $10^6$ & $0.1$   & & & \\
+        $10^6$ & $0.5$   & & & \\
+        \hline
+        $10^7$ & $0.001$ & & & \\
+        $10^7$ & $0.01$  & & & \\
+        $10^7$ & $0.1$   & & & \\
+        $10^7$ & $0.5$   & & & \\
+        \hline
+        $10^8$ & $0.001$ & & & \\
+        $10^8$ & $0.01$  & & & \\
+        $10^8$ & $0.1$   & & & \\
+        $10^8$ & $0.5$   & & & \\
+        \hline
+    \end{tabular}
+\end{table*}
+
+% --- Pancake ---
+\begin{table*}[ht]
+    \centering
+    \caption{\texttt{pancake\_initial} results.}
+    \label{tab:pancake_results}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{$N$} & \textbf{Scale} & \textbf{Build (ms)} & \textbf{Rebalance (ms)} & \textbf{Depth} \\
+        \hline
+        $10^4$ & $0.001$ & & & \\
+        $10^4$ & $0.01$  & & & \\
+        $10^4$ & $0.1$   & & & \\
+        $10^4$ & $0.5$   & & & \\
+        \hline
+        $10^5$ & $0.001$ & & & \\
+        $10^5$ & $0.01$  & & & \\
+        $10^5$ & $0.1$   & & & \\
+        $10^5$ & $0.5$   & & & \\
+        \hline
+        $10^6$ & $0.001$ & & & \\
+        $10^6$ & $0.01$  & & & \\
+        $10^6$ & $0.1$   & & & \\
+        $10^6$ & $0.5$   & & & \\
+        \hline
+        $10^7$ & $0.001$ & & & \\
+        $10^7$ & $0.01$  & & & \\
+        $10^7$ & $0.1$   & & & \\
+        $10^7$ & $0.5$   & & & \\
+        \hline
+        $10^8$ & $0.001$ & & & \\
+        $10^8$ & $0.01$  & & & \\
+        $10^8$ & $0.1$   & & & \\
+        $10^8$ & $0.5$   & & & \\
+        \hline
+    \end{tabular}
+\end{table*}
+
+% --- Pancake Tilted ---
+\begin{table*}[ht]
+    \centering
+    \caption{\texttt{pancake\_initial\_tilted} results.}
+    \label{tab:pancake_tilted_results}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{$N$} & \textbf{Scale} & \textbf{Build (ms)} & \textbf{Rebalance (ms)} & \textbf{Depth} \\
+        \hline
+        $10^4$ & $0.001$ & & & \\
+        $10^4$ & $0.01$  & & & \\
+        $10^4$ & $0.1$   & & & \\
+        $10^4$ & $0.5$   & & & \\
+        \hline
+        $10^5$ & $0.001$ & & & \\
+        $10^5$ & $0.01$  & & & \\
+        $10^5$ & $0.1$   & & & \\
+        $10^5$ & $0.5$   & & & \\
+        \hline
+        $10^6$ & $0.001$ & & & \\
+        $10^6$ & $0.01$  & & & \\
+        $10^6$ & $0.1$   & & & \\
+        $10^6$ & $0.5$   & & & \\
+        \hline
+        $10^7$ & $0.001$ & & & \\
+        $10^7$ & $0.01$  & & & \\
+        $10^7$ & $0.1$   & & & \\
+        $10^7$ & $0.5$   & & & \\
+        \hline
+        $10^8$ & $0.001$ & & & \\
+        $10^8$ & $0.01$  & & & \\
+        $10^8$ & $0.1$   & & & \\
+        $10^8$ & $0.5$   & & & \\
+        \hline
+    \end{tabular}
+\end{table*}
+
+% --- Filament Z ---
+\begin{table*}[ht]
+    \centering
+    \caption{\texttt{filament\_z\_initial} results.}
+    \label{tab:filament_z_results}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{$N$} & \textbf{Scale} & \textbf{Build (ms)} & \textbf{Rebalance (ms)} & \textbf{Depth} \\
+        \hline
+        $10^4$ & $0.001$ & & & \\
+        $10^4$ & $0.01$  & & & \\
+        $10^4$ & $0.1$   & & & \\
+        $10^4$ & $0.5$   & & & \\
+        \hline
+        $10^5$ & $0.001$ & & & \\
+        $10^5$ & $0.01$  & & & \\
+        $10^5$ & $0.1$   & & & \\
+        $10^5$ & $0.5$   & & & \\
+        \hline
+        $10^6$ & $0.001$ & & & \\
+        $10^6$ & $0.01$  & & & \\
+        $10^6$ & $0.1$   & & & \\
+        $10^6$ & $0.5$   & & & \\
+        \hline
+        $10^7$ & $0.001$ & & & \\
+        $10^7$ & $0.01$  & & & \\
+        $10^7$ & $0.1$   & & & \\
+        $10^7$ & $0.5$   & & & \\
+        \hline
+        $10^8$ & $0.001$ & & & \\
+        $10^8$ & $0.01$  & & & \\
+        $10^8$ & $0.1$   & & & \\
+        $10^8$ & $0.5$   & & & \\
+        \hline
+    \end{tabular}
+\end{table*}
+
+% --- Filament YZ ---
+\begin{table*}[ht]
+    \centering
+    \caption{\texttt{filament\_yz\_initial} results.}
+    \label{tab:filament_yz_results}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{$N$} & \textbf{Scale} & \textbf{Build (ms)} & \textbf{Rebalance (ms)} & \textbf{Depth} \\
+        \hline
+        $10^4$ & $0.001$ & & & \\
+        $10^4$ & $0.01$  & & & \\
+        $10^4$ & $0.1$   & & & \\
+        $10^4$ & $0.5$   & & & \\
+        \hline
+        $10^5$ & $0.001$ & & & \\
+        $10^5$ & $0.01$  & & & \\
+        $10^5$ & $0.1$   & & & \\
+        $10^5$ & $0.5$   & & & \\
+        \hline
+        $10^6$ & $0.001$ & & & \\
+        $10^6$ & $0.01$  & & & \\
+        $10^6$ & $0.1$   & & & \\
+        $10^6$ & $0.5$   & & & \\
+        \hline
+        $10^7$ & $0.001$ & & & \\
+        $10^7$ & $0.01$  & & & \\
+        $10^7$ & $0.1$   & & & \\
+        $10^7$ & $0.5$   & & & \\
+        \hline
+        $10^8$ & $0.001$ & & & \\
+        $10^8$ & $0.01$  & & & \\
+        $10^8$ & $0.1$   & & & \\
+        $10^8$ & $0.5$   & & & \\
+        \hline
+    \end{tabular}
+\end{table*}
+
+% --- Filament XYZ ---
+\begin{table*}[ht]
+    \centering
+    \caption{\texttt{filament\_xyz\_initial} results.}
+    \label{tab:filament_xyz_results}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        \textbf{$N$} & \textbf{Scale} & \textbf{Build (ms)} & \textbf{Rebalance (ms)} & \textbf{Depth} \\
+        \hline
+        $10^4$ & $0.001$ & & & \\
+        $10^4$ & $0.01$  & & & \\
+        $10^4$ & $0.1$   & & & \\
+        $10^4$ & $0.5$   & & & \\
+        \hline
+        $10^5$ & $0.001$ & & & \\
+        $10^5$ & $0.01$  & & & \\
+        $10^5$ & $0.1$   & & & \\
+        $10^5$ & $0.5$   & & & \\
+        \hline
+        $10^6$ & $0.001$ & & & \\
+        $10^6$ & $0.01$  & & & \\
+        $10^6$ & $0.1$   & & & \\
+        $10^6$ & $0.5$   & & & \\
+        \hline
+        $10^7$ & $0.001$ & & & \\
+        $10^7$ & $0.01$  & & & \\
+        $10^7$ & $0.1$   & & & \\
+        $10^7$ & $0.5$   & & & \\
+        \hline
+        $10^8$ & $0.001$ & & & \\
+        $10^8$ & $0.01$  & & & \\
+        $10^8$ & $0.1$   & & & \\
+        $10^8$ & $0.5$   & & & \\
+        \hline
+    \end{tabular}
+\end{table*}
