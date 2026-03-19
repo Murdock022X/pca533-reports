@@ -10,3 +10,11 @@ Currently we have used \href{https://www.cloudlab.us/}{CloudLab} to gain access 
 
 
 \subsection{Results}
+A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it be in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/init_100m.png}
+    \caption{Comparison of operations in a broader tree update on a single GPU.}
+    \label{fig:keys_100m}
+\end{figure}
