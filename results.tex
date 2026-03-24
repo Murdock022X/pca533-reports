@@ -1,7 +1,7 @@
 \section{Results}
 \label{sec:results}
 
-A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime. 
+A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime. Therefore, these kernels will be the main target of optimizations, which will be covered in the latter stages of this project.
 
 \begin{figure}[h!]
     \centering
@@ -12,18 +12,51 @@ A general test to develop a sense of Cornerstone's internal bottlenecks is done 
 
 Figure \ref{fig:keys_100m} breaks down the runtime of both the Hilbert and Morton key cases using the local only build with 100 million particles. The dominant factor in the calculation is the reordering and sorting of the keys and corresponding particles with the actual building of the tree and computation of the space filling curves taking only $\approx 10\%$ of the total build time.
 
+Focusing on overall runtime, there is a stark distinction of behavior between low particle count (1 million and less) and high particle count (10 million and more) workloads. The runtime of low particle workloads either is not significantly impacted by the initial distribution, as shown in Figure 4 or behaves unpredictably as shown in Figure 5. A consistent pattern emerges across high particle workloads, which is shown in Figure 6. Here we can see that, generally, lower dimension manifolds have lower construction cost associated with them.
+
+It should be noted that the construction time does not scale linearly with the number of particles at low particle counts as gleamed from figures \ref{fig:gist_10k}, \ref{fig:gist_100k}, and \ref{fig:gist_100m}. As cornerstone has been largely been tuned for very high particle count workloads, it is not surprising that low particle count workloads do not have the same performance characteristics.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/gist_n10k.png}
+    \caption{Construction time of different initial distri-
+butions for a low particle workload of n = $10^4$.}
+    \label{fig:gist_10k}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/gist_n100k.png}
+    \caption{Construction time of different initial distri-
+butions for a low particle workload of n = $10^5$.}
+    \label{fig:gist_100k}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/gist_n100m.png}
+    \caption{Construction time of different initial distri-
+butions for a high particle workload of n = $10^8$.}
+    \label{fig:gist_100m}
+\end{figure}
+
+To analyze the effects of perturbation, the update time of the octree after a perturbation is applied was compared to the initial construction time octree for each distribution. It is clear that, for the low particle workloads, perturbations have very little impact on update time as shown in Figure \ref{fig:plot_10k}. Only for high particle workloads does the correlation of perturbation strength to relative update speed become noticeable, as shown in Figure \ref{fig:plot_100m}.
+
+The perturbations have varying effectiveness depending on the initial distribution to which they are applied. This is likely due to the fact that the initial distributions are easily expressed by the octree, which applying a perturbation degrades. This is bolstered by the fact that the distributions which are most susceptible to perturbations are also the one’s that have the lowest initial construction time. This is likely why the uniform distribution is not affected greatly by perturbations until a perturbation level of .5, when the filament distributions see a steady performance decrease at increasing perturbation levels. It is important to note that a relative execution time greater than 100\% does not mean updating the octree is slower than reconstructing it from scratch as the perturbed distribution may still take longer to generate from scratch. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/plotted_n10k.png}
+    \caption{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a low particle workload of n = $10^4$.}
+    \label{fig:plot_10k}
+\end{figure}
+
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.45\textwidth]{assets/plotted_n100m.png}
-    \caption{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths.}
+    \caption{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a high particle workload of n = $10^8$.}
     \label{fig:plot_100m}
 \end{figure}
-
-It is clear that, for the smaller distributions, the perturbations have very little impact on the update time. Only once there are 10 million particles does a clear correlation of perturbation strength to relative update speed become noticeable. At 100 million particles, the effectiveness of the perturbation is even more pronounced.
-
-To establish that perturbations significantly affect the recomputation time of the tree after a perturbation, the recomputation time was measured in relation to the time to initially construct the time as shown in Figure \ref{fig:plot_100m}. The perturbations have varying effectiveness depending on the initial distribution to which they are applied. This is likely due to the fact that the initial distributions are easily expressed by the octree, which applying a perturbation degrades. This is likely why the uniform distribution is not affected greatly by perturbations until a perturbation level of .5, when the filament distributions see a steady performance decrease at increasing perturbation levels. It is important to note that a relative execution time greater than 100\% does not mean updating the octree is slower than reconstructing it from scratch as the perturbed distribution may still take longer to generate from scratch. 
-
-Increasing the perturbation strength often increases the execution time of ReorderXYZ, which was already the most costly part of construction as shown in Figure \ref{fig:breakdown_filament_xyz_100m}. It also mostly eliminates the execution time of UpdateLeaves while leaving the other kernels largely unchanged. As filament\_xyz is the most susceptible to perturbations, it is easiest to notice the changes for that distribution but affects the same kernels in similar ways for different initial distributions.   
 
 Overall in figure \ref{fig:plot_100m} the results were as expected. The general trend shows the rebalancing of the perturbed octree has a dependency on the strength of perturbations. That is as perturbation strength grows time to rebalance grows. What we did not expect to see was that the rebalancing would become significantly greater than even the original build timings, up to $\approx 40\%$ in some cases. This will need to be explored at greater depth in the second half of the project.
 
