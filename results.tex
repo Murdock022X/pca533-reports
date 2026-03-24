@@ -1,16 +1,4 @@
-\section{Project Status}
-
-\subsection{Code}
-We have created the necessary Jupyter notebooks and Python scripts to generate distributions of interest and their perturbations. This includes code to save those distributions to HDF5 files. We developed a framework in C++ for loading those HDF5 distributions and their perturbations and generating the corresponding octrees, adding the perturbations to the particles and then rebalancing the octree. This allows us to observe the effects of the initial construction and across varying magnitudes of perturbations. This includes methods for a CPU and GPU implementation as well as their related distributed MPI variants. This is flexible enough to allow us to generate any metrics of interest in the future and has already allowed us to gather the results discussed in \ref{subsec:results}. Tooling to instrument sections of interest is done using NVIDIA Tooling Extensions (NVTX). We instrumented our code to highlight important metrics at a relatively coarse level so that we could observe the primary steps necessary to building the Octree and focus our attention on bottlenecks. 
-
-\subsection{Machines}
-For the results used here we have used \href{https://www.cloudlab.us/}{CloudLab} to gain access to GPUs allowing us to get on a node with 4 V100s; however, access to this is difficult to attain on a regular basis and does not provide access to bare metal. We have access to the NCSA Delta cluster at this point and will use it to gather metrics on other GPUs and in varying configurations during the second half of the project. This should also provide much more consistent access to the resources we need. The Delta cluster comes with 4x and 8x GPU configurations per node with A40, A100, and H200 GPUs being the devices we are interested in testing on in the future. We expect that we will not do inter-node experiments as it is outside of the hardware limits we have and probably not of much interest. 
-
-\subsection{Algorithms}
-
-
-\subsection{Results}
-\label{subsec:results}
+\section{Results}
 A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime. 
 
 It is clear that, for the smaller distributions, the perturbations have very little impact on the update time. Only once there are 10 million particles does a clear correlation of perturbation strength to relative update speed become noticeable. At 100 million particles, the effectiveness of the perturbation is even more pronounced.
@@ -31,13 +19,6 @@ Increasing the perturbation strength often increases the execution time of Reord
     \includegraphics[width=0.45\textwidth]{assets/plotted_n100m.png}
     \caption{Percent change of construction time of perturbed graph versus initial graph for different perturbation strengths.}
     \label{fig:plot_100m}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.45\textwidth]{assets/breakdown_n100m_filament_xyz.png}
-    \caption{ For some reason this graph isn't showing up for me.}
-    \label{fig:breakdown_filament_xyz_100m}
 \end{figure}
 
 It appears that there was an issue with profiling the distributed case. While we were able to gather MPI events a significant $\approx 89\%$ of the execution time of a distributed build time appears to devoid of kernels or any NVTX ranges. 

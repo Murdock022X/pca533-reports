@@ -55,4 +55,13 @@ The Hilbert curve on the other hand takes on a U shape, see Figure \ref{fig:hilb
 We will not detail the Radix sort and Gather implementations as they are well known. The reason these operations are necessary is to sort the keys thus producing the in-order arrangement of keys according to the space filling curve that recursively partitions the space into octants. The keys will have some attributes including $x,y,z$ but may have others based on the application these also need to be sorted to align with the sorted keys. In Cornerstone these are distinct kernels with a Radix sort and $k$ gathers for the number of properties to be sorted.
 
 \subsection{Update Leaf Nodes}
-We now come to the namesake of Cornerstone being the Cornerstone array called $K$. $K$ is an array of SFC keys of length $n_l+1$, $n_l$ being the number of leaves. 
+We now come to the namesake of Cornerstone being the Cornerstone array called $K$. $K$ is a sorted array of SFC keys of length $n_l+1$, $n_l$ being the number of leaves, with the first element being $0$ and the last element being $8^L$, with the difference between one element and it's successor being $8^l$, where $l \le L$. Then $K$ will define a unique octree. Then the steps to generate the cornerstone array from the particle SFCs are to calculate a histogram of the particle SFCs belonging to each each leaf node and then perform three steps:
+\begin{enumerate}
+    \item Compute the rebalancing decision for each node i.e a code where 8 indicates $N_{crit} < N_i$ and so the node should be subdivided, 0 indicates the node should be replaced, and 1 indicates the leaf should be unchanged.
+    \item Perform an exclusive prefix sum of the array of computed rebalancing decision codes, this leads to each element in the result being the new index of the node in the corresponding new Cornerstone array. The final element is the number of nodes in the new Cornerstone array.
+    \item Finally if the rebalancing decision for node $i$ is $1$ then the key is copied to the new index calculated in the exclusive prefix sum. If the decision is to split, the code is $8$ and we copy the keys of the children of the original node to the new range.
+\end{enumerate}
+A few notes on performance, note that each kernel launch here must occur in serial, no stream parallelism is possible or kernel fusion. Additionally a memory allocation is necessary and has to read the value of the last element of the exclusive prefix sum to calculate the number of new leaf nodes.
+
+\subsection{Update Internal Nodes}
+Finally the 

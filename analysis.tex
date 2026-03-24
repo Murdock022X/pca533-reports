@@ -48,6 +48,12 @@ No rotations were applied (\texttt{rotations = None}).
 
 The full sweep comprises $6$ distributions $\times$ $5$ particle counts $\times$ $4$ perturbation scales $= 120$ configurations.
 
+\subsection{Code}
+We have created the necessary Jupyter notebooks and Python scripts to generate distributions of interest and their perturbations. This includes code to save those distributions to HDF5 files. We developed a framework in C++ for loading those HDF5 distributions and their perturbations and generating the corresponding octrees, adding the perturbations to the particles and then rebalancing the octree. This allows us to observe the effects of the initial construction and across varying magnitudes of perturbations. This includes methods for a CPU and GPU implementation as well as their related distributed MPI variants. This is flexible enough to allow us to generate any metrics of interest in the future and has already allowed us to gather the results discussed in \ref{subsec:results}. Tooling to instrument sections of interest is done using NVIDIA Tooling Extensions (NVTX). We instrumented our code to highlight important metrics at a relatively coarse level so that we could observe the primary steps necessary to building the Octree and focus our attention on bottlenecks. 
+
+\subsection{Machines}
+For the results used here we have used \href{https://www.cloudlab.us/}{CloudLab} to gain access to GPUs allowing us to get on a node with 4 V100s; however, access to this is difficult to attain on a regular basis and does not provide access to bare metal. We have access to the NCSA Delta cluster at this point and will use it to gather metrics on other GPUs and in varying configurations during the second half of the project. This should also provide much more consistent access to the resources we need. The Delta cluster comes with 4x and 8x GPU configurations per node with A40, A100, and H200 GPUs being the devices we are interested in testing on in the future. We expect that we will not do inter-node experiments as it is outside of the hardware limits we have.
+
 % --- Uniform ---
 % \begin{table*}[ht]
 %     \centering
