@@ -1,4 +1,6 @@
 \section{Results}
+\label{sec:results}
+
 A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime. 
 
 It is clear that, for the smaller distributions, the perturbations have very little impact on the update time. Only once there are 10 million particles does a clear correlation of perturbation strength to relative update speed become noticeable. At 100 million particles, the effectiveness of the perturbation is even more pronounced.
@@ -21,4 +23,9 @@ Increasing the perturbation strength often increases the execution time of Reord
     \label{fig:plot_100m}
 \end{figure}
 
-It appears that there was an issue with profiling the distributed case. While we were able to gather MPI events a significant $\approx 89\%$ of the execution time of a distributed build time appears to devoid of kernels or any NVTX ranges. 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/lets_local_hilbert_10m.png}
+    \caption{Comparison of locally essential tree build time vs. local only using 10 million particles and Hilbert keys.}
+    \label{fig:plot_100m}
+\end{figure}
