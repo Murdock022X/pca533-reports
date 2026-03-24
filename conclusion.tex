@@ -1,4 +1,6 @@
 \section{Conclusion}
 \label{sec:conclusion}
 
+In summary we have presented our initial efforts towards analyzing the Cornerstone framework. The Cornerstone code and ours was instrumented using the NVTX profiling tools. We developed a harness for running the application using GPUs or CPUs and with either a local octree setup or a distributed setup. Around this we created scripts to run parameter sweeps and gather profiles and the octree view. We also developed scripts to generate the distributions of initial positions and their perturbations.
 
+To gather initial results we used a CloudLab node with 4 V100 GPUs. We profiled the local octree and cases with 2 MPI ranks 
