@@ -1,27 +1,15 @@
 \section{Cornerstone}
 \label{sec:cornerstone}
 
-To characterize Cornerstone's performance we first need to understand the algorithmic steps. This involves iterating over several elementwise functions until reaching a convergence criterion.
+To characterize Cornerstone's performance we first need to understand the algorithmic steps. This involves iterating over several elementwise functions until reaching a convergence criterion. Note that there are two methods of interest, the method where an octree is constructed locally on a node and the case where a locally essential tree is used for distributed simulation. We review the local case first and then advance to the distributed case as an extension. An outline of the steps in construction is given for the local case.
+\begin{itemize}
+    \item Compute a space filling curve (Morton or Hilbert)
+    \item Sort the keys and rearrange any properties associated with the key such as the position, mass, charge, etc
+    \item Update the leaf nodes
+    \item Update the internal tree structure
+\end{itemize}
 
-\subsection{Space Filling Curves}
-
-The first step which is common to any octree construction method is the calculation of the space filling curve. Informally a space filling curve will take points existing in space and map them to integer keys, when one sorts the original particles based on these keys and traverses the path through them the resulting curve will recursively move through the domain octant by octant (in the case of three dimensional points). In this way a space filling curve is a kind of fractal.
-
-We are interested in two types of space filling curves namely Morton Z-order curves and Hilbert curves. The path of a Morton Z-order curve may be viewed in Figure \ref{fig:morton_leaves} and shows the distinct z-pattern. Morton codes are computationally efficient to calculate but as is also evident visually the curve may "jump" octants resulting in unfavorable communication patterns between nodes. The Hilbert curve on the other hand takes on a U shape, see Figure \ref{fig:hilbert_leaves}. Hilbert codes offer a "compact" mapping which may reduce the cost of communication but come at the cost in increased computational inefficiency.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.45\textwidth]{assets/leaves_morton.png}
-    \caption{The leaves of an octree colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves.}
-    \label{fig:morton_leaves}
-\end{figure}
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.45\textwidth]{assets/leaves_hilbert.png}
-    \caption{The leaves of an octree colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves.}
-    \label{fig:hilbert_leaves}
-\end{figure}
+Additionally Cornerstone has 6 critical parameters which are tabulated below to give an overview. These will also be important parameters for characterization.
 
 \begin{table}[h!]
     \centering
@@ -40,3 +28,31 @@ We are interested in two types of space filling curves namely Morton Z-order cur
         \hline
     \end{tabular}
 \end{table}
+
+\subsection{Space Filling Curves}
+
+Informally a space filling curve will take points existing in space and map them to integer keys, when one sorts the original particles based on these keys and traverses the path through them the resulting curve will recursively move through the domain octant by octant (in the case of three dimensional points). In this way a space filling curve is a kind of fractal.
+
+We are interested in two types of space filling curves namely Morton Z-order curves and Hilbert curves. The path of a Morton Z-order curve may be viewed in Figure \ref{fig:morton_leaves} and shows the distinct z-pattern. Morton codes are computationally efficient to calculate but as is also evident visually the curve may "jump" octants resulting in unfavorable communication patterns between nodes. Calculating a Morton code based on particle positioning is a simple constant number of bitshift operations.
+
+The Hilbert curve on the other hand takes on a U shape, see Figure \ref{fig:hilbert_leaves}. Hilbert codes offer a "compact" mapping which may reduce the cost of communication but come at the cost in increased computational inefficiency. The loop to compute Hilbert keys is $L$ iterations long, $L$ being the maximal depth of the octree.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/leaves_morton.png}
+    \caption{The leaves of an octree colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves.}
+    \label{fig:morton_leaves}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/leaves_hilbert.png}
+    \caption{The leaves of an octree colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves.}
+    \label{fig:hilbert_leaves}
+\end{figure}
+
+\subsection{Radix Sorting and Gathers}
+We will not detail the Radix sort and Gather implementations as they are well known. The reason these operations are necessary is to sort the keys thus producing the in-order arrangement of keys according to the space filling curve that recursively partitions the space into octants. The keys will have some attributes including $x,y,z$ but may have others based on the application these also need to be sorted to align with the sorted keys. In Cornerstone these are distinct kernels with a Radix sort and $k$ gathers for the number of properties to be sorted.
+
+\subsection{Update Leaf Nodes}
+We now come to the namesake of Cornerstone being the Cornerstone array called $K$. $K$ is an array of SFC keys of length $n_l+1$, $n_l$ being the number of leaves. 
