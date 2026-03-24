@@ -1,4 +1,6 @@
 \section{Related Work}
 \label{sec:related_work}
 
-The related work of your project ~\cite{cornerstone}.
+Karras ~\cite{karras} developed a binary radix tree construction method which could be fully parallelized on the GPU and run in a single kernel launch. 
+
+Apetrei ~\cite{lbvh} improved on Karras's method of construction by the calculation of the bounding box being fused into the bottom up traversal in linear time with a single kernel launch.
