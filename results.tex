@@ -1,6 +1,8 @@
 \section{Results}
 \label{sec:results}
 
+We used our framework to perform several experiments. We explored several questions for the midterm the first was parameter spaces we tests over different distributions, for both Morton and Hilbert keys, and the initial build versus the subsequent perturbation rebalance.
+
 A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime. Therefore, these kernels will be the main target of optimizations, which will be covered in the latter stages of this project.
 
 \begin{figure}[h!]
