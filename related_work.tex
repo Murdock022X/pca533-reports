@@ -1,6 +1,12 @@
 \section{Related Work}
 \label{sec:related_work}
 
-Karras ~\cite{karras} developed a binary radix tree construction method which could be fully parallelized on the GPU and run in a single kernel launch. 
+Karras~\cite{karras} developed a fully parallel binary radix tree construction method for the GPU. Cornerstone builds directly on these algorithms, extending them from single-GPU graphics to distributed with locally essential trees (LETs) and iterative rebalancing. Apetrei~\cite{lbvh} improved on Karras by fusing bounding box calculation into a single bottom-up kernel pass. Cornerstone also minimizes kernel launches but operates on the leaf-level SFC key array rather than an explicit node hierarchy, helping accelerate rebalancing.
 
-Apetrei ~\cite{lbvh} improved on Karras's method of construction by the calculation of the bounding box being fused into the bottom up traversal in linear time with a single kernel launch.
+Warren and Salmon~\cite{warren1993} introduced the parallel hashed octree, replacing pointer-based structures with hash tables for distributed N-body simulation. Cornerstone shares the distributed octree goal but replaces the hash scheme with a linear SFC-key representation that maps naturally onto GPU scan kernels.
+
+Burtscher and Pingali~\cite{burtscher2011} presented the first complete GPU-only Barnes-Hut implementation, showing 74x speedup over optimized serial CPU code. Unlike Cornerstone, their tree is rebuilt from scratch each timestep and targets only the single-GPU case. B\'{e}dorf et al.~\cite{bedorf2012} developed Bonsai, a GPU-resident sparse octree treecode processing over 2.8M particles/sec with 20x speedup over CPU. Cornerstone follows the same GPU-resident philosophy but adds distributed multi-GPU support and rebalancing rather than full reconstruction.
+
+Sundar et al.~\cite{sundar2008} presented parallel bottom-up construction and 2:1 balance refinement of linear octrees, handling over a billion octants in under a minute on 1024 CPUs. While both DENDRO and Cornerstone target scalable octree construction, DENDRO is designed for CPU-based adaptive mesh PDE solvers, while Cornerstone targets GPU particle simulations with incremental updating.
+
+Lauterbach et al.~\cite{lauterbach2009} compared Morton-code LBVH builds against SAH approaches for GPU BVH construction, noting the construction speed versus traversal quality tradeoff. Cornerstone uses a similar Morton encoding but targets particle simulations and allows Hilbert curve usage. Deng et al.~\cite{mloctree2018} introduced the G-ML-Octree, showing an order of magnitude update cost reduction for moving 3D objects on GPUs through a loose octree with memoized updates. Both G-ML-Octree and Cornerstone avoid full reconstruction, but Cornerstone achieves this by iteratively adjusting the SFC key boundaries of its leaf array instead of maintaining a loose hierarchy with memoized updates.
