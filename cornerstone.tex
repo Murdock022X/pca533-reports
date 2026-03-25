@@ -42,14 +42,21 @@ In both cases the calculation is a simple elementwise GPU kernel, which does a r
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.45\textwidth]{assets/leaves_morton.png}
-    \caption{The leaves of an octree colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves.}
+    \caption{The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves, note the jump between different octants which causes issues in communication.}
     \label{fig:morton_leaves}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.45\textwidth]{assets/leaves_hilbert.png}
-    \caption{The leaves of an octree colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves.}
+    \caption{The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves, note that the jump that occurs in \ref{fig:morton_leaves} disappears leading to a compact domain.}
+    \label{fig:hilbert_leaves}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/leaves_hilbert.png}
+    \caption{The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves, note that the jump that occurs in \ref{fig:morton_leaves} disappears leading to a compact domain.}
     \label{fig:hilbert_leaves}
 \end{figure}
 
@@ -83,7 +90,7 @@ An important performance note here that will show up in \ref{sec:results} is tha
 
 The above process outlines the process to build a balanced octree on a single rank. This method can be extended however to allow multiple peers to decompose the domain among themselves, this allows a rank to maintain a well resolved local domain with a coarser global domain. This modifies the process of generating the octree to compute a global octree and a focused tree. 
 
-The global octree allows us to decompose the domain of particles among the peer ranks based on the SFC, calculating the coarse global domain with a higher $N_{crit}$ called $N_{crit,glob}$. This process modifies the above algorithm so that the initial histogram step in the Cornerstone array rebalance does a global sum of the histograms from each rank . Then performing the balancing steps using the histogram of the global domain rather than the local domain yields a balanced global octree. Such an algorithm would incur unacceptable communication costs at high resolution (lower $N_{crit}$) as it involves an all-to-all communication which would be iterated on; more resolved domains requiring more iterations to balance the tree. However at a coarser resolution we can use this to efficiently decompose the global domain by partitioning the Cornerstone arrays space filling curve among the ranks the collective communication of this method is $O(nlogn)$ where $n$ is the total number of particles across all ranks.
+The global octree allows us to decompose the domain of particles among the peer ranks based on the SFC, calculating the coarse global domain with a higher $N_{crit}$ called $N_{crit,glob}$. This process modifies the above algorithm so that the initial histogram step in the Cornerstone array rebalance does a global sum of the histograms from each rank via \textit{MPI\_Allreduce}. Then performing the balancing steps using the histogram of the global domain rather than the local domain yields a balanced global octree. Such an algorithm would incur unacceptable communication costs at high resolution (lower $N_{crit}$) as it involves an all-to-all communication which would be iterated on; more resolved domains requiring more iterations to balance the tree. However at a coarser resolution we can use this to efficiently decompose the global domain by partitioning the Cornerstone arrays space filling curve among the ranks the collective communication of this method is $O(nlogn)$ where $n$ is the total number of particles across all ranks.
 
 \subsection{Locally Essential Trees}
 
