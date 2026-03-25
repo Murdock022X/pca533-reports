@@ -21,6 +21,30 @@ Six initial particle distributions are used:
 
 By analyzing 1D, 2D, and 3D manifolds that are or are not axis-aligned, a wide variety of behavior can be observed after applying perturbations. Because the perturbation distribution is 3-dimensional, the various distributions will have their unique attributes degraded as the perturbation magnitude increases.  
 
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{visualizations/pancake/n100m/pancake_n100m_positions.png}\\[0.5em]
+    \includegraphics[width=\textwidth]{visualizations/pancake/n100m/pancake_n100m_perturbations.png}
+    \caption{Pancake distribution with $10^8$ particles. Top: initial and final positions. Bottom: perturbation vectors.}
+    \label{fig:pancake_vis}
+\end{figure*}
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_positions.png}\\[0.5em]
+    \includegraphics[width=\textwidth]{visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_perturbations.png}
+    \caption{Tilted pancake distribution with $10^8$ particles. Top: initial and final positions. Bottom: perturbation vectors.}
+    \label{fig:pancake_tilted_vis}
+\end{figure*}
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{visualizations/filament_xyz/n100m/filament_xyz_n100m_positions.png}\\[0.5em]
+    \includegraphics[width=\textwidth]{visualizations/filament_xyz/n100m/filament_xyz_n100m_perturbations.png}
+    \caption{Filament XYZ distribution with $10^8$ particles. Top: initial and final positions. Bottom: perturbation vectors.}
+    \label{fig:filament_xyz_vis}
+\end{figure*}
+
 \subsection{Perturbation Model}
 
 After the initial distribution is generated, a perturbation vector is applied to simulate particle motion between timesteps. The perturbation function draws each displacement component independently from $\mathcal{U}(-s, +s)$ where $s$ is the scale factor. Particles that move outside the domain after perturbation are truncated to the boundary (\texttt{out\_of\_bounds = `truncate'}). Four perturbation scales are used:
