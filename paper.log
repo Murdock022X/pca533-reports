@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.24)  25 MAR 2026 17:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.10.24)  25 MAR 2026 17:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1018,69 +1018,19 @@ Overfull \hbox (18.56271pt too wide) in paragraph at lines 17--18
 -dimensional fil-a-ment aligned
  []
 
-<visualizations/pancake/n100m/pancake_n100m_positions.png, id=157, 1104.5265pt 
-x 288.47775pt>
-File: visualizations/pancake/n100m/pancake_n100m_positions.png Graphic file (ty
-pe png)
-<use visualizations/pancake/n100m/pancake_n100m_positions.png>
-Package pdftex.def Info: visualizations/pancake/n100m/pancake_n100m_positions.p
-ng  used on input line 26.
-(pdftex.def)             Requested size: 505.89pt x 132.12914pt.
-<visualizations/pancake/n100m/pancake_n100m_perturbations.png, id=158, 866.6377
-6pt x 279.444pt>
-File: visualizations/pancake/n100m/pancake_n100m_perturbations.png Graphic file
- (type png)
-<use visualizations/pancake/n100m/pancake_n100m_perturbations.png>
-Package pdftex.def Info: visualizations/pancake/n100m/pancake_n100m_perturbatio
-ns.png  used on input line 27.
-(pdftex.def)             Requested size: 505.89pt x 163.1223pt.
+<initial_dist/initial_distributions_n100m.png, id=157, 867.24pt x 289.08pt>
+File: initial_dist/initial_distributions_n100m.png Graphic file (type png)
+<use initial_dist/initial_distributions_n100m.png>
+Package pdftex.def Info: initial_dist/initial_distributions_n100m.png  used on 
+input line 50.
+(pdftex.def)             Requested size: 505.89pt x 168.63252pt.
 
-Class acmart Warning: A possible image without description on input line 30.
-
-<visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_posit
-ions.png, id=159, 1104.5265pt x 288.47775pt>
-File: visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_
-positions.png Graphic file (type png)
-<use visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_p
-ositions.png>
-Package pdftex.def Info: visualizations/pancake_initial_tilted/n100m/pancake_in
-itial_tilted_n100m_positions.png  used on input line 34.
-(pdftex.def)             Requested size: 505.89pt x 132.12914pt.
-<visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_pertu
-rbations.png, id=160, 866.63776pt x 279.444pt>
-File: visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_
-perturbations.png Graphic file (type png)
-<use visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n100m_p
-erturbations.png>
-Package pdftex.def Info: visualizations/pancake_initial_tilted/n100m/pancake_in
-itial_tilted_n100m_perturbations.png  used on input line 35.
-(pdftex.def)             Requested size: 505.89pt x 163.1223pt.
-
-Class acmart Warning: A possible image without description on input line 38.
-
-<visualizations/filament_xyz/n100m/filament_xyz_n100m_positions.png, id=161, 11
-04.5265pt x 288.47775pt>
-File: visualizations/filament_xyz/n100m/filament_xyz_n100m_positions.png Graphi
-c file (type png)
-<use visualizations/filament_xyz/n100m/filament_xyz_n100m_positions.png>
-Package pdftex.def Info: visualizations/filament_xyz/n100m/filament_xyz_n100m_p
-ositions.png  used on input line 42.
-(pdftex.def)             Requested size: 505.89pt x 132.12914pt.
-<visualizations/filament_xyz/n100m/filament_xyz_n100m_perturbations.png, id=162
-, 866.63776pt x 279.444pt>
-File: visualizations/filament_xyz/n100m/filament_xyz_n100m_perturbations.png Gr
-aphic file (type png)
-<use visualizations/filament_xyz/n100m/filament_xyz_n100m_perturbations.png>
-Package pdftex.def Info: visualizations/filament_xyz/n100m/filament_xyz_n100m_p
-erturbations.png  used on input line 43.
-(pdftex.def)             Requested size: 505.89pt x 163.1223pt.
-
-Class acmart Warning: A possible image without description on input line 46.
+Class acmart Warning: A possible image without description on input line 53.
 
 LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
-(Font)              scaled to size 10.0pt on input line 50.
+(Font)              scaled to size 10.0pt on input line 57.
 ) (./results.tex
-<assets/init_100m.png, id=166, 502.2765pt x 506.6127pt>
+<assets/init_100m.png, id=161, 502.2765pt x 506.6127pt>
 File: assets/init_100m.png Graphic file (type png)
 <use assets/init_100m.png>
 Package pdftex.def Info: assets/init_100m.png  used on input line 10.
@@ -1093,7 +1043,7 @@ Class acmart Warning: A possible image without description on input line 13.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [5.5]
-<assets/gist_n10k.png, id=183, 409.7709pt x 328.1058pt>
+<assets/gist_n10k.png, id=178, 409.7709pt x 328.1058pt>
 File: assets/gist_n10k.png Graphic file (type png)
 <use assets/gist_n10k.png>
 Package pdftex.def Info: assets/gist_n10k.png  used on input line 23.
@@ -1102,10 +1052,7 @@ Package pdftex.def Info: assets/gist_n10k.png  used on input line 23.
 
 Class acmart Warning: A possible image without description on input line 26.
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<assets/gist_n100k.png, id=184, 416.2752pt x 328.1058pt>
+<assets/gist_n100k.png, id=179, 416.2752pt x 328.1058pt>
 File: assets/gist_n100k.png Graphic file (type png)
 <use assets/gist_n100k.png>
 Package pdftex.def Info: assets/gist_n100k.png  used on input line 30.
@@ -1116,7 +1063,7 @@ Class acmart Warning: A possible image without description on input line 33.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<assets/gist_n100m.png, id=185, 412.6617pt x 328.1058pt>
+<assets/gist_n100m.png, id=180, 412.6617pt x 328.1058pt>
 File: assets/gist_n100m.png Graphic file (type png)
 <use assets/gist_n100m.png>
 Package pdftex.def Info: assets/gist_n100m.png  used on input line 37.
@@ -1127,10 +1074,9 @@ Class acmart Warning: A possible image without description on input line 40.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-<assets/plotted_n10k.png, id=188, 470.4777pt x 354.8457pt>
+[6.6 <./initial_dist/initial_distributions_n100m.png> <./assets/init_100m.png> 
+<./assets/gist_n10k.png>]
+<assets/plotted_n10k.png, id=198, 470.4777pt x 354.8457pt>
 File: assets/plotted_n10k.png Graphic file (type png)
 <use assets/plotted_n10k.png>
 Package pdftex.def Info: assets/plotted_n10k.png  used on input line 48.
@@ -1142,7 +1088,7 @@ Class acmart Warning: A possible image without description on input line 51.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<assets/plotted_n100m.png, id=189, 470.4777pt x 354.8457pt>
+<assets/plotted_n100m.png, id=199, 470.4777pt x 354.8457pt>
 File: assets/plotted_n100m.png Graphic file (type png)
 <use assets/plotted_n100m.png>
 Package pdftex.def Info: assets/plotted_n100m.png  used on input line 55.
@@ -1153,7 +1099,7 @@ Class acmart Warning: A possible image without description on input line 58.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<assets/lets_local_hilbert_10m.png, id=191, 586.1097pt x 441.5697pt>
+<assets/lets_local_hilbert_10m.png, id=201, 586.1097pt x 441.5697pt>
 File: assets/lets_local_hilbert_10m.png Graphic file (type png)
 <use assets/lets_local_hilbert_10m.png>
 Package pdftex.def Info: assets/lets_local_hilbert_10m.png  used on input line 
@@ -1163,35 +1109,18 @@ Package pdftex.def Info: assets/lets_local_hilbert_10m.png  used on input line
 Class acmart Warning: A possible image without description on input line 67.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [6.6 <./visualizations/pancake/n100m/pancake_n100m_positions.png> <./visualiza
-tions/pancake/n100m/pancake_n100m_perturbations.png>]
-
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) (./remaining.tex
-Underfull \vbox (badness 2368) has occurred while \output is active []
+) (./remaining.tex [7.7 <./assets/gist_n100k.png> <./assets/gist_n100m.png> <./
+assets/plotted_n10k.png> <./assets/plotted_n100m.png>]) (./related_work.tex
 
-)
-(./related_work.tex
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [7.7 <./visualizations/pancake_initial_tilted/n100m/pancake_initial_tilted_n10
-0m_positions.png> <./visualizations/pancake_initial_tilted/n100m/pancake_initia
-l_tilted_n100m_perturbations.png>]
-Underfull \vbox (badness 3612) has occurred while \output is active []
-
- [8.8 <./visualizations/filament_xyz/n100m/filament_xyz_n100m_positions.png> <.
-/visualizations/filament_xyz/n100m/filament_xyz_n100m_perturbations.png> <./ass
-ets/init_100m.png> <./assets/gist_n10k.png>] [9.9 <./assets/gist_n100k.png> <./
-assets/gist_n100m.png> <./assets/plotted_n10k.png> <./assets/plotted_n100m.png>
-]
-
-Package natbib Warning: Citation `mloctree2018' on page 10 undefined on input l
-ine 12.
+Package natbib Warning: Citation `mloctree2018' on page 8 undefined on input li
+ne 12.
 
 ) (./conclusion.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8.8 <./assets/lets_local_hilbert_10m.png>]
 Overfull \hbox (2.34778pt too wide) in paragraph at lines 4--5
 \T1/LinuxLibertineT-TLF/m/n/10 (-20) setup. Around this we cre-ated scripts to 
 run pa-ram-e-ter sweeps
@@ -1219,39 +1148,61 @@ Class acmart Warning: Some images may lack descriptions.
 Package balance Warning: You have called \balance in second column
 (balance)                Columns might not be balanced.
 
-[10.10{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_ncsllp
-.enc} <./assets/lets_local_hilbert_10m.png>] (./paper.aux)
+[9.9{/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/libertine/lbtn_ncsllp.e
+nc}] (./paper.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
  ***********
-Package rerunfilecheck Info: File `paper.out' has not changed.
-(rerunfilecheck)             Checksum: 82FDEBA8E5777E36BF52F427345127CB;3222.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `paper.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `paper.out':
+(rerunfilecheck)             Before: 82FDEBA8E5777E36BF52F427345127CB;3222
+(rerunfilecheck)             After:  56EBC8E13FEBE6133DC48B138C91B86C;3222.
  ) 
 Here is how much of TeX's memory you used:
- 20332 strings out of 474116
- 327271 string characters out of 5743681
+ 20301 strings out of 474116
+ 324449 string characters out of 5743681
  1955187 words of memory out of 5000000
- 41780 multiletter control sequences out of 15000+600000
- 675576 words of font info for 306 fonts, out of 8000000 for 9000
+ 41746 multiletter control sequences out of 15000+600000
+ 675841 words of font info for 308 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  90i,12n,131p,1672b,606s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2024/texmf-dist/fonts/type1/public/inconsolata/Inconsolat
-a-zi4b.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/inconsolata/I
-nconsolata-zi4r.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newt
-x/LibertineMathMI.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/ne
-wtx/LibertineMathMI7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public
-/libertine/LinBiolinumT.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/pub
-lic/libertine/LinLibertineT.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1
-/public/libertine/LinLibertineTB.pfb></usr/local/texlive/2024/texmf-dist/fonts/
-type1/public/libertine/LinLibertineTI.pfb></usr/local/texlive/2024/texmf-dist/f
-onts/type1/public/newtx/NewTXMI.pfb></usr/local/texlive/2024/texmf-dist/fonts/t
-ype1/public/newtx/txmiaX.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/pu
-blic/newtx/txsys.pfb>
-Output written on paper.pdf (10 pages, 2101541 bytes).
+
+pdfTeX warning (dest): name{figure.caption.15} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{figure.caption.14} has been referenced but does not
+ exist, replaced by a fixed one
+
+
+pdfTeX warning (dest): name{section*.17} has been referenced but does not exist
+, replaced by a fixed one
+
+</usr/local/texlive/2024/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-
+zi4b.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/inconsolata/Inc
+onsolata-zi4r.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newtx/
+LibertineMathMI.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newt
+x/LibertineMathMI7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/l
+ibertine/LinBiolinumT.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/publi
+c/libertine/LinLibertineT.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/p
+ublic/libertine/LinLibertineTB.pfb></usr/local/texlive/2024/texmf-dist/fonts/ty
+pe1/public/libertine/LinLibertineTI.pfb></usr/local/texlive/2024/texmf-dist/fon
+ts/type1/public/newtx/NewTXMI.pfb></usr/local/texlive/2024/texmf-dist/fonts/typ
+e1/public/newtx/txmiaX.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/publ
+ic/newtx/txsys.pfb>
+Output written on paper.pdf (9 pages, 1156287 bytes).
 PDF statistics:
- 332 PDF objects out of 1000 (max. 8388607)
- 262 compressed objects within 3 object streams
+ 319 PDF objects out of 1000 (max. 8388607)
+ 260 compressed objects within 3 object streams
  72 named destinations out of 1000 (max. 500000)
- 58632 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 58607 words of extra memory for PDF output out of 61914 (max. 10000000)
 
