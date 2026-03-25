@@ -14,7 +14,9 @@ A general test to develop a sense of Cornerstone's internal bottlenecks is done 
 
 Figure \ref{fig:keys_100m} breaks down the runtime of both the Hilbert and Morton key cases using the local only build with 100 million particles. The dominant factor in the calculation is the reordering and sorting of the keys and corresponding particles with the actual building of the tree and computation of the space filling curves taking only $\approx 10\%$ of the total build time. This is to be expected, as we mention in \ref{sec:cornerstone}, computation of SFCs for particles and the subsequent sorting and reordering operates on the total number of particles which is typically much greater than the number of nodes in the octree assuming $N_{crit}$ is small, so the first part of the build has more work to do. This aligns with results from Keller et al. ~\cite{cornerstone} when they profile Cornerstone, their A100 profile is given below. The benchmark from their paper matches our breakdown here with Radix sort dominating although they do not consider the time to do gather's of particle properties to match the new layout.
 
-\begin{center}
+\begin{table}[h]
+\centering
+\caption{Original Cornerstone profile on an A100 GPU, adapted from ~\cite{cornerstone}.}
 \begin{tabular}{||c c c c||} 
  \hline
  execution on A100 & 1M & 32M & 512M \\ [0.5ex] 
@@ -30,7 +32,7 @@ Figure \ref{fig:keys_100m} breaks down the runtime of both the Hilbert and Morto
  Interal Nodes & 0.19 ms & 0.65 ms & 5.4 ms \\ [1ex] 
  \hline
 \end{tabular}
-\end{center}
+\end{table}
 
 Focusing on overall runtime, there is a stark distinction of behavior between low particle count (1 million and less) and high particle count (10 million and more) workloads. The runtime of low particle workloads either is not significantly impacted by the initial distribution, as shown in Figure 4 or behaves unpredictably as shown in Figure 5. A consistent pattern emerges across high particle workloads, which is shown in Figure 6. Here we can see that, generally, lower dimension manifolds have lower construction cost associated with them.
 
