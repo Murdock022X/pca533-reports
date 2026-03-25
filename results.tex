@@ -1,7 +1,7 @@
 \section{Results}
 \label{sec:results}
 
-We used our framework to perform several experiments. We explored several questions for the midterm the first was parameter spaces we tests over different distributions, for both Morton and Hilbert keys, and the initial build versus the subsequent perturbation rebalance.
+We used our framework to perform several experiments. We explored several questions for the midterm the first was parameter spaces we tests over different distributions, for both Morton and Hilbert keys, and the initial build versus the subsequent perturbation rebalance. We broke down the construction time into the high level algorithm components, to gather metrics of interest for further profiling at the system and kernel level in the second half of the project and to guide any optimization efforts.
 
 A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime. Therefore, these kernels will be the main target of optimizations, which will be covered in the latter stages of this project.
 
@@ -12,7 +12,7 @@ A general test to develop a sense of Cornerstone's internal bottlenecks is done 
     \label{fig:keys_100m}
 \end{figure}
 
-Figure \ref{fig:keys_100m} breaks down the runtime of both the Hilbert and Morton key cases using the local only build with 100 million particles. The dominant factor in the calculation is the reordering and sorting of the keys and corresponding particles with the actual building of the tree and computation of the space filling curves taking only $\approx 10\%$ of the total build time.
+Figure \ref{fig:keys_100m} breaks down the runtime of both the Hilbert and Morton key cases using the local only build with 100 million particles. The dominant factor in the calculation is the reordering and sorting of the keys and corresponding particles with the actual building of the tree and computation of the space filling curves taking only $\approx 10\%$ of the total build time. This is to be expected, as we mention in \ref{sec:cornerstone} computation of SFCs for particles and the subsequent sorting and reordering operates on the total number of particles which is typically much greater than the number of nodes in the octree, both internal and external, so the first part of the build is more prone to 
 
 Focusing on overall runtime, there is a stark distinction of behavior between low particle count (1 million and less) and high particle count (10 million and more) workloads. The runtime of low particle workloads either is not significantly impacted by the initial distribution, as shown in Figure 4 or behaves unpredictably as shown in Figure 5. A consistent pattern emerges across high particle workloads, which is shown in Figure 6. Here we can see that, generally, lower dimension manifolds have lower construction cost associated with them.
 
