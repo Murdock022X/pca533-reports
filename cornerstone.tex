@@ -1,7 +1,7 @@
 \section{Cornerstone}
 \label{sec:cornerstone}
 
-To characterize Cornerstone's performance we first need to understand the algorithmic steps. Note that there are two methods of interest, the method where an octree is constructed locally on a node and the case where a locally essential tree is used for distributed simulation. We review the local case first and then advance to the distributed case as an extension. We focus primarily on the code needed and how it maps to GPU architectures, for further insight to the algorithm reference Cornerstone ~\cite{cornerstone}. An outline of the steps in construction is given for the local case.
+To characterize Cornerstone's performance, we first need to understand the algorithmic steps. Note that there are two methods of interest, the method where an octree is constructed locally on a node and the case where a locally essential tree is used for distributed simulation. We review the local case first and then advance to the distributed case as an extension. We focus primarily on the code needed and how it maps to GPU architectures, for further insight into the algorithm reference Cornerstone ~\cite{cornerstone}. An outline of the construction steps is given for the local case.
 \begin{itemize}
     \item Compute a space filling curve (Morton or Hilbert)
     \item Sort the keys and rearrange any properties associated with the key such as the position, mass, charge, etc
@@ -9,7 +9,7 @@ To characterize Cornerstone's performance we first need to understand the algori
     \item Update the internal tree structure
 \end{itemize}
 
-Additionally Cornerstone has 6 critical parameters which are tabulated below to give an overview. These will also be important parameters for characterization.
+Additionally, Cornerstone has 6 critical parameters which are tabulated below to give an overview. These will also be important parameters for characterization.
 
 \begin{table}[h!]
     \centering
@@ -53,18 +53,11 @@ In both cases the calculation is a simple elementwise GPU kernel, which does a r
     \label{fig:hilbert_leaves}
 \end{figure}
 
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.45\textwidth]{assets/leaves_hilbert.png}
-    \caption{The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves, note that the jump that occurs in \ref{fig:morton_leaves} disappears leading to a compact domain.}
-    \label{fig:hilbert_leaves}
-\end{figure}
-
 \subsection{Radix Sorting and Gathers}
-We will not detail the Radix sort and Gather implementations as they are well known. The reason these operations are necessary is to sort the keys thus producing the in-order arrangement of keys according to the space filling curve that recursively partitions the space into octants. The keys will have some attributes including $x,y,z$ but may have others based on the application, these also need to be aligned with the sorted keys. In Cornerstone these are distinct kernels with a Radix sort and $k$ gathers for the number of properties to be sorted. The radix sort is done using the CUB libraries implementation DeviceRadixSort::SortPairs. The gathering of particles in the single node case is left to the user but we used the Thrust libraries gather implementation which has competitive performance.
+We will not detail the Radix sort and Gather implementations as they are well known. The reason these operations are necessary is to sort the keys thus producing the in-order arrangement of keys according to the space filling curve that recursively partitions the space into octants. The keys will have some attributes including $x,y,z$ but may have others based on the application, these also need to be aligned with the sorted keys. In Cornerstone these are distinct kernels with a Radix sort and $k$ gathers for the number of properties to be sorted. The radix sort is done using the CUB libraries implementation DeviceRadixSort::SortPairs. The gathering of particles in the single node case is left to the user but we used the Thrust library's gather implementation which has competitive performance.
 
 \subsection{Update Leaf Nodes}
-The namesake of Cornerstone ~\cite{cornerstone} is the Cornerstone array called $K$. $K$ is a sorted array of SFC keys of length $n_l+1$, $n_l$ being the number of leaves, with the first element being $0$ and the last element being $8^L$, with the difference between one element and it's successor being $8^l$, where $l \le L$. Then $K$ will define a unique octree but represents explicitly the leaves. Cornerstone ~\cite{cornerstone} also uses an $N_{crit}$ parameter which defines the maximum allowable number of particles a leaf node may have; in other words this parameter defines the resolution of the octree or depth at which it must be resolved. Then the steps to generate the Cornerstone array from the particle SFCs are to calculate a histogram of the particle SFCs belonging to each each leaf node and then perform three steps:
+The namesake of Cornerstone ~\cite{cornerstone} is the Cornerstone array called $K$. $K$ is a sorted array of SFC keys of length $n_l+1$, $n_l$ being the number of leaves, with the first element being $0$ and the last element being $8^L$, with the difference between one element and it's successor being $8^l$, where $l \le L$. Then $K$ will define a unique octree but represents explicitly the leaves. Cornerstone ~\cite{cornerstone} also uses an $N_{crit}$ parameter which defines the maximum allowable number of particles a leaf node may have. In other words, this parameter defines the resolution of the octree or depth at which it must be resolved. Then the steps to generate the Cornerstone array from the particle SFCs are to calculate a histogram of the particle SFCs belonging to each each leaf node and then perform three steps:
 \begin{enumerate}
     \item Compute the rebalancing decision for each node i.e a code where 8 indicates $N_{crit} < N_i$ and so the node should be subdivided, 0 indicates the node should be replaced, and 1 indicates the leaf should be unchanged.
     \item Perform an exclusive prefix sum of the array of computed rebalancing decision codes, this leads to each element in the result being the new index of the node in the corresponding new Cornerstone array. The final element is the number of nodes in the new Cornerstone array.
@@ -72,7 +65,7 @@ The namesake of Cornerstone ~\cite{cornerstone} is the Cornerstone array called 
 \end{enumerate}
 A Cornerstone array is then balanced once no node needs to be split or merged, which means that every leaf node has a particle count $\le N_{crit}$ and every internal node has a particle count $> N_{crit}$. By iteratively applying these steps until we reach the criteria for a balanced Cornerstone array we define a unique balanced octree. 
 
-Regarding performance, note that each kernel launch here must occur in serial, no stream parallelism is possible as global synchronization is necessary between each step, however there are some techniques that may allow kernel fusion to be effective which may be of interest depending on the high level bottlenecks. The calculation of the rebalancing decision is an elementwise kernel and in practice may use larger multiples of $8$ to indicate multiple levels need to be merged. The exclusive prefix sum Additionally, a memory allocation is necessary and has to read the value of the last element of the exclusive prefix sum to calculate the number of new leaf nodes. 
+Regarding performance, note that each kernel launch here must occur in serial, no stream parallelism is possible as global synchronization is necessary between each step, however there are some techniques that may allow kernel fusion to be effective which may be of interest depending on the high level bottlenecks. The calculation of the rebalancing decision is an elementwise kernel and in practice may use larger multiples of $8$ to indicate multiple levels need to be merged. Additionally, a memory allocation is necessary and has to read the value of the last element of the exclusive prefix sum to calculate the number of new leaf nodes. 
 
 \subsection{Update Internal Nodes}
 Finally the internal tree structure must be created allowing us to traverse the tree and ultimately we are left with three arrays of integers, note $n = n_i + n_l$ with $n_i$ being the number of internal nodes and $n_l$ being the number of leaf nodes:
@@ -88,7 +81,7 @@ An important performance note here that will show up in \ref{sec:results} is tha
 
 \subsection{Domain Decomposition}
 
-The above process outlines the process to build a balanced octree on a single rank. This method can be extended however to allow multiple peers to decompose the domain among themselves, this allows a rank to maintain a well resolved local domain with a coarser global domain. This modifies the process of generating the octree to compute a global octree and a focused tree. 
+The above process outlines the process to build a balanced octree on a single rank. This method can be extended, however, to allow multiple peers to decompose the domain among themselves, this allows a rank to maintain a well resolved local domain with a coarser global domain. This modifies the process of generating the octree to compute a global octree and a focused tree. 
 
 The global octree allows us to decompose the domain of particles among the peer ranks based on the SFC, calculating the coarse global domain with a higher $N_{crit}$ called $N_{crit,glob}$. This process modifies the above algorithm so that the initial histogram step in the Cornerstone array rebalance does a global sum of the histograms from each rank via \textit{MPI\_Allreduce}. Then performing the balancing steps using the histogram of the global domain rather than the local domain yields a balanced global octree. Such an algorithm would incur unacceptable communication costs at high resolution (lower $N_{crit}$) as it involves an all-to-all communication which would be iterated on; more resolved domains requiring more iterations to balance the tree. However at a coarser resolution we can use this to efficiently decompose the global domain by partitioning the Cornerstone arrays space filling curve among the ranks the collective communication of this method is $O(nlogn)$ where $n$ is the total number of particles across all ranks.
 
