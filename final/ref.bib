@@ -1,0 +1,113 @@
+@inproceedings{cornerstone,
+    author = {Keller, Sebastian and Cavelan, Aur\'{e}lien and Cabezon, Rub\'{e}n and Mayer, Lucio and Ciorba, Florina},
+    title = {Cornerstone: Octree Construction Algorithms for Scalable Particle Simulations},
+    year = {2023},
+    isbn = {9798400701900},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3592979.3593417},
+    doi = {10.1145/3592979.3593417},
+    abstract = {This paper presents an octree construction method, called Cornerstone, that facilitates global domain decomposition and interactions between particles in mesh-free numerical simulations. Our method is based on algorithms developed for 3D computer graphics, which we extend to distributed high performance computing (HPC) systems. Cornerstone yields global and locally essential octrees and is able to operate on all levels of tree hierarchies in parallel. The resulting octrees are suitable for supporting the computation of various kinds of short and long range interactions in N-body methods, such as Barnes-Hut and the Fast Multipole Method (FMM). While we provide a CPU implementation, Cornerstone may run entirely on GPUs. This results in significantly faster tree construction compared to execution on CPUs and serves as a powerful building block for the design of simulation codes that move beyond an offloading approach, where only numerically intensive tasks are dispatched to GPUs. With data residing exclusively in GPU memory, Cornerstone eliminates data movements between CPUs and GPUs. As an example, we employ Cornerstone to generate locally essential octrees for a Barnes-Hut treecode running on almost the full LUMI-G system with up to 8 trillion particles.},
+    booktitle = {Proceedings of the Platform for Advanced Scientific Computing Conference},
+    articleno = {18},
+    numpages = {10},
+    location = {Davos, Switzerland},
+    series = {PASC '23}
+}
+@inproceedings{lbvh,
+    booktitle = {Computer Graphics and Visual Computing (CGVC)},
+    editor = {Rita Borgo and Wen Tang},
+    title = {{Fast and Simple Agglomerative LBVH Construction}},
+    author = {Apetrei, Ciprian},
+    year = {2014},
+    publisher = {The Eurographics Association},
+    isbn = {978-3-905674-70-5},
+    doi = {10.2312/cgvc.20141206}
+}
+@inproceedings{karras,
+    booktitle = {Eurographics/ ACM SIGGRAPH Symposium on High Performance Graphics},
+    editor = {Carsten Dachsbacher and Jacob Munkberg and Jacopo Pantaleoni},
+    title = {{Maximizing Parallelism in the Construction of BVHs, Octrees, and k-d Trees}},
+    author = {Karras, Tero},
+    year = {2012},
+    publisher = {The Eurographics Association},
+    ISSN = {2079-8679},
+    ISBN = {978-3-905674-41-5},
+    DOI = {10.2312/EGGH/HPG12/033-037}
+}
+@inproceedings{warren1993,
+    author = {Warren, Michael S. and Salmon, John K.},
+    title = {A Parallel Hashed Oct-Tree N-Body Algorithm},
+    booktitle = {Proceedings of Supercomputing '93},
+    year = {1993},
+    pages = {12--21},
+    publisher = {ACM},
+    doi = {10.1145/169627.169640}
+}
+@incollection{burtscher2011,
+    author = {Burtscher, Martin and Pingali, Keshav},
+    title = {An Efficient {CUDA} Implementation of the Tree-Based {Barnes Hut} n-Body Algorithm},
+    booktitle = {GPU Computing Gems Emerald Edition},
+    chapter = {6},
+    pages = {75--92},
+    publisher = {Morgan Kaufmann},
+    year = {2011},
+    doi = {10.1016/B978-0-12-384988-5.00006-1}
+}
+@article{bedorf2012,
+    author = {B\'{e}dorf, Jeroen and Gaburov, Evghenii and Portegies Zwart, Simon},
+    title = {A Sparse Octree Gravitational N-body Code That Runs Entirely on the {GPU} Processor},
+    journal = {Journal of Computational Physics},
+    volume = {231},
+    number = {7},
+    pages = {2825--2839},
+    year = {2012},
+    doi = {10.1016/j.jcp.2011.12.024}
+}
+@article{sundar2008,
+    author = {Sundar, Hari and Sampath, Rahul S. and Biros, George},
+    title = {Bottom-Up Construction and 2:1 Balance Refinement of Linear Octrees in Parallel},
+    journal = {SIAM Journal on Scientific Computing},
+    volume = {30},
+    number = {5},
+    pages = {2675--2708},
+    year = {2008},
+    doi = {10.1137/070681727}
+}
+@article{lauterbach2009,
+    author = {Lauterbach, Christian and Garland, Michael and Sengupta, Shubhabrata and Luebke, David and Manocha, Dinesh},
+    title = {Fast {BVH} Construction on {GPUs}},
+    journal = {Computer Graphics Forum},
+    volume = {28},
+    number = {2},
+    pages = {375--384},
+    year = {2009},
+    doi = {10.1111/j.1467-8659.2009.01377.x}
+}
+@article{mloctree2018,
+    author = {Deng, Zhiming and Wang, Liang and Han, Weijia and Ranjan, Rajiv and Zomaya, Albert Y.},
+    title = {{G-ML-Octree}: An Update-Efficient Index Structure for Simulating {3D} Moving Objects across {GPUs}},
+    journal = {IEEE Transactions on Parallel and Distributed Systems},
+    volume = {29},
+    number = {5},
+    pages = {1075--1088},
+    year = {2018},
+    doi = {10.1109/TPDS.2017.2787747}
+}
+@article{sfc2023,
+    author = {Holmen, John K. and others},
+    title = {The Impact of Space-Filling Curves on Data Movement in Parallel Systems},
+    journal = {arXiv preprint arXiv:2307.07828},
+    year = {2023},
+    url = {https://arxiv.org/abs/2307.07828}
+}
+@incollection{yokota2012,
+    author = {Yokota, Rio and Barba, Lorena A.},
+    title = {Treecode and Fast Multipole Method for N-Body Simulation with {CUDA}},
+    booktitle = {GPU Computing Gems Emerald Edition},
+    chapter = {9},
+    publisher = {Morgan Kaufmann},
+    year = {2012},
+    doi = {10.1016/B978-0-12-384988-5.00009-7}
+}
+

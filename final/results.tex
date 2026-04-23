@@ -1,0 +1,95 @@
+\section{Results}
+\label{sec:results}
+
+We first explored the difference in performance between Morton and Hilbert keys. We also explored the execution time of an initial build versus the subsequent perturbation rebalance. We broke down the construction time into the high level algorithm components, to gather metrics of interest for further profiling at the system and kernel level in the second half of the project and to guide any optimization efforts.
+
+\subsection{Bottleneck}
+
+A general test to develop a sense of Cornerstone's internal bottlenecks is done on a single GPU comparing a case with 100 million particles using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately we see that the sorting and reordering of particle properties is very dominant in this regime. Therefore, these kernels will be the main target of optimizations, which will be covered in the latter stages of this project.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/init_100m.png}
+    \caption{Comparison of operations in a broader tree update on a single GPU.}
+    \label{fig:keys_100m}
+\end{figure}
+
+Figure \ref{fig:keys_100m} breaks down the runtime of both the Hilbert and Morton key cases using the local only build with 100 million particles. The dominant factor in the calculation is the reordering and sorting of the keys and corresponding particles with the actual building of the tree and computation of the space filling curves taking only $\approx 10\%$ of the total build time. This is to be expected, as we mention in \ref{sec:cornerstone}, computation of SFCs for particles and the subsequent sorting and reordering operates on the total number of particles which is typically much greater than the number of nodes in the octree assuming $N_{crit}$ is greater than 1, so the first part of the build has more work to do. This aligns with results from Keller et al. ~\cite{cornerstone} when they profile Cornerstone, their A100 profile is given below. The benchmark from their paper matches our breakdown here with Radix sort dominating although they do not consider the time to do gather's of particle properties to match the new layout.
+
+\begin{table}[h]
+\centering
+\caption{Original Cornerstone profile on an A100 GPU, adapted from ~\cite{cornerstone}.}
+\begin{tabular}{||c c c c||} 
+ \hline
+ execution on A100 & 1M & 32M & 512M \\ [0.5ex] 
+ \hline\hline
+ 64-bit Morton keys & 0.018 ms & 0.31 ms & 7.9 ms \\ 
+ \hline
+ 64-bit Hilbert keys & 0.084 ms & 1.9 ms & 30 ms \\
+ \hline
+ Radix sort & 0.483 ms & 5.0 ms & 73 ms \\
+ \hline
+ Leaf Update & 0.11 ms & 0.51 ms & 2.5 ms \\
+ \hline
+ Interal Nodes & 0.19 ms & 0.65 ms & 5.4 ms \\ [1ex] 
+ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Initial Distributions}
+
+Focusing on overall runtime, there is a stark distinction of behavior between low particle count (1 million and less) and high particle count (10 million and more) workloads. The runtime of low particle workloads either is not significantly impacted by the initial distribution, as shown in Figure \ref{fig:gist_10k} or behaves unpredictably as shown in Figure \ref{fig:gist_100k}. A consistent pattern emerges across high particle workloads, which is shown in Figure \ref{fig:gist_100m}. Here we can see that, generally, lower dimension manifolds have lower construction cost associated with them.
+
+There is no consistently worst or best initial distribution as can be gleamed in figures \ref{fig:gist_10k}, \ref{fig:gist_100k}, and \ref{fig:gist_100m}. This is somewhat surprising, the author of Cornerstone, Keller mentioned that filaments and pancakes were difficult distributions for Cornerstone to process efficiently due to the large amounts of space that may be wasted in dividing the octants.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/gist_n10k.png}
+    \caption{Construction time of different initial distributions for a low particle workload of n = $10^4$.}
+    \label{fig:gist_10k}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/gist_n100k.png}
+    \caption{Construction time of different initial distributions for a low particle workload of n = $10^5$.}
+    \label{fig:gist_100k}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/gist_n100m.png}
+    \caption{Construction time of different initial distributions for a high particle workload of n = $10^8$.}
+    \label{fig:gist_100m}
+\end{figure}
+
+\subsection{Perturbations}
+
+To analyze the effects of perturbations, the update time of the octree after a perturbation is applied was compared to the initial construction time octree for each distribution. It is clear that, for the low particle workloads, perturbations have very little impact on update time as shown in Figure \ref{fig:plot_10k}. Only for high particle workloads does the correlation of perturbation strength to relative update speed become noticeable, as shown in Figure \ref{fig:plot_100m}.
+
+The perturbations have varying effectiveness depending on the initial distribution to which they are applied. This is likely due to the fact that the initial distributions are easily expressed by the octree, which applying a perturbation degrades. This is bolstered by the fact that the distributions which are most susceptible to perturbations are also the ones that have the lowest initial construction time. This is likely why the uniform distribution is not affected greatly by perturbations until a perturbation level of .5, when the filament distributions see a steady performance decrease at increasing perturbation levels. It is important to note that a relative execution time greater than 100\% does not mean updating the octree is slower than reconstructing it from scratch as the perturbed distribution may still take longer to generate from scratch. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/plotted_n10k.png}
+    \caption{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a low particle workload of n = $10^4$.}
+    \label{fig:plot_10k}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/plotted_n100m.png}
+    \caption{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a high particle workload of n = $10^8$.}
+    \label{fig:plot_100m}
+\end{figure}
+
+Overall in figure \ref{fig:plot_100m} the results were as expected. The general trend shows the rebalancing of the perturbed octree has a dependency on the strength of perturbations. That is as perturbation strength grows time to rebalance grows. What we did not expect to see was that the rebalancing would become significantly greater than even the original build timings, up to $\approx 40\%$ in some cases. This will need to be explored at greater depth in the second half of the project.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/lets_local_hilbert_10m.png}
+    \caption{Comparison of locally essential tree build time vs. local only using 10 million particles, Hilbert keys, and a uniform distribution using 2 ranks, each with their own GPU.}
+    \label{fig:plot_lets_local}
+\end{figure}
+
+Figure \ref{fig:plot_lets_local} shows the difference in timing in local octree build times vs. the corresponding times for building the distributed domain for the same number of particles. This shows us the overhead of the distributed case over the single node case. Clearly the overhead is significant at approximately two orders of magnitude in this case. On observation of the profile the largest time sync is the calculation of peer ranks according to the multipole acceptance criterion, this comes as a surprise to us. The operations are all CPU side operations that should incur relatively low latency. We need to gather more data to ensure this is correct and consistent across different sets of hardware. Since it is a CPU side operation the NSight Systems profiler did not pick up much information so getting a perf report should help pickup the issue.

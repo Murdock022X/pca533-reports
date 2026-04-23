@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+
+\bibitem{lbvh}
+{\sc Apetrei, C.}
+\newblock {Fast and Simple Agglomerative LBVH Construction}.
+\newblock In {\em Computer Graphics and Visual Computing (CGVC)\/} (2014), R.~Borgo and W.~Tang, Eds., The Eurographics Association.
+
+\bibitem{bedorf2012}
+{\sc B\'{e}dorf, J., Gaburov, E., and Portegies~Zwart, S.}
+\newblock A sparse octree gravitational n-body code that runs entirely on the {GPU} processor.
+\newblock {\em Journal of Computational Physics 231}, 7 (2012), 2825--2839.
+
+\bibitem{burtscher2011}
+{\sc Burtscher, M., and Pingali, K.}
+\newblock An efficient {CUDA} implementation of the tree-based {Barnes Hut} n-body algorithm.
+\newblock In {\em GPU Computing Gems Emerald Edition}. Morgan Kaufmann, 2011, ch.~6, pp.~75--92.
+
+\bibitem{karras}
+{\sc Karras, T.}
+\newblock {Maximizing Parallelism in the Construction of BVHs, Octrees, and k-d Trees}.
+\newblock In {\em Eurographics/ ACM SIGGRAPH Symposium on High Performance Graphics\/} (2012), C.~Dachsbacher, J.~Munkberg, and J.~Pantaleoni, Eds., The Eurographics Association.
+
+\bibitem{cornerstone}
+{\sc Keller, S., Cavelan, A., Cabezon, R., Mayer, L., and Ciorba, F.}
+\newblock Cornerstone: Octree construction algorithms for scalable particle simulations.
+\newblock In {\em Proceedings of the Platform for Advanced Scientific Computing Conference\/} (New York, NY, USA, 2023), PASC '23, Association for Computing Machinery.
+
+\bibitem{lauterbach2009}
+{\sc Lauterbach, C., Garland, M., Sengupta, S., Luebke, D., and Manocha, D.}
+\newblock Fast {BVH} construction on {GPUs}.
+\newblock {\em Computer Graphics Forum 28}, 2 (2009), 375--384.
+
+\bibitem{sundar2008}
+{\sc Sundar, H., Sampath, R.~S., and Biros, G.}
+\newblock Bottom-up construction and 2:1 balance refinement of linear octrees in parallel.
+\newblock {\em SIAM Journal on Scientific Computing 30}, 5 (2008), 2675--2708.
+
+\bibitem{mloctree2022}
+{\sc Wang, M., et~al.}
+\newblock {G-ML-Octree}: An update-efficient index structure for simulating {3D} moving objects across {GPUs}.
+\newblock {\em Newcastle University ePrints\/} (2022).
+
+\bibitem{warren1993}
+{\sc Warren, M.~S., and Salmon, J.~K.}
+\newblock A parallel hashed oct-tree n-body algorithm.
+\newblock In {\em Proceedings of Supercomputing '93\/} (1993), ACM, pp.~12--21.
+
+\end{thebibliography}

@@ -1,0 +1,6 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+In summary, we have presented our initial efforts towards analyzing Cornerstone ~\cite{cornerstone}. The Cornerstone ~\cite{cornerstone} code and ours were instrumented using the NVTX profiling tools. We developed a harness for running the application using GPUs or CPUs and with either a local octree setup or a distributed setup. Around this we created scripts to run parameter sweeps and gather profiles and the octree view. We also developed scripts to generate the distributions of initial positions and their perturbations. And we detailed the kernels and code that are required by the algorithm.
+
+To gather initial results we used a CloudLab node with 4 V100 GPUs. We profiled the local octree case and a case with 2 MPI ranks each with their own V100 GPU. We showed that perturbation strength did correlate with the rebalancing time but only with larger numbers of particles. The sorting and reordering steps dominate the computation of the tree locally. We also showed that the distributed case introduced significant overhead near two orders of magnitude but was not due to communication costs which needs further exploration.
