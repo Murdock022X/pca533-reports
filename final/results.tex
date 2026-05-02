@@ -107,3 +107,12 @@ Another way to improve bandwidth is to use vector datatypes which allow one to g
     \caption{Performance improvements of optimized sort using vector datatypes over original gather for 100m particles on an A100 GPU.}
     \label{fig:orig_vs_opt_kt}
 \end{figure}
+
+\subsection{Performance of Local Build vs. Cross GPU}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/kbits_ktype_dist_local.png}
+    \caption{Performance of different numbers of GPUs across different key configurations on an A100 node.}
+    \label{fig:local_dist}
+\end{figure}
