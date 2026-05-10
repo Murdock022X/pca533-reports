@@ -3,7 +3,7 @@
 
 To characterize Cornerstone's performance, we first need to understand the algorithmic steps. Note that there are two methods of interest, the method where an octree is constructed locally on a node and the case where a locally essential tree is used for distributed simulation. We review the local case first and then advance to the distributed case as an extension. We focus primarily on the code needed and how it maps to GPU architectures, for further insight into the algorithm reference Cornerstone ~\cite{cornerstone}. An outline of the construction steps is given for the local case.
 \begin{itemize}
-    \item Compute a space filling curve (SFC) (Morton or Hilbert)
+    \item Compute a space filling curve (Morton or Hilbert)
     \item Sort the keys and rearrange any properties associated with the key such as the position, mass, charge, or any variable associated with a particle of interest during the computation using octrees.
     \item Update the leaf nodes
     \item Update the internal tree structure
