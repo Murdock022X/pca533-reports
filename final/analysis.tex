@@ -82,8 +82,7 @@ The Cornerstone framework accepts several runtime parameters via the command lin
 The full sweep comprises $6$ distributions $\times$ $5$ particle counts $\times$ $4$ perturbation scales $= 120$ configurations. There were also several tests run independently of this parameter sweep to gather general metrics which used a uniform distribution of particles on the unit cube.
 
 \subsection{Machines}
-For the results used here we have used \href{https://www.cloudlab.us/}{CloudLab} to gain access to GPUs allowing us to get on a node with 4 V100s; however, access to this is difficult to attain on a regular basis and does not provide access to bare metal. We have access to the NCSA Delta cluster at this point and will use it to gather metrics on other GPUs and in varying configurations during the second half of the project. This should also provide much more consistent access to the resources we need. The Delta cluster comes with 4x and 8x GPU configurations per node with A40, A100, and H200 GPUs being the devices we are interested in testing on in the future. We expect that we will not do inter-node experiments as it is outside of the hardware limits we have.
-
+For initial results on we used \href{https://www.cloudlab.us/}{CloudLab} to gain access to GPUs allowing us to get on a node with 4 V100s; 
 For all the results presented in \ref{sec:results} we used a c4130 node on the CloudLab Wisconsin cluster. The node had four NVIDIA Tesla V100 GPUs. Each GPU had 16GB of memory in an SXM2 configuration with 900 GB/sec of peak memory bandwidth. A single V100 has 84 Streaming multiprocessors each with 64 FP32 cores, 64 INT32 cores, and 32 FP64 cores.
 
 % --- Uniform ---
