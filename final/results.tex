@@ -119,7 +119,7 @@ Similarly to the local case, we profiled the distributed method to gauge where b
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{assets/flame_dist.png}
-    \caption{Flame graph profile of distributed construction.}
+    \caption{Flame graph profile of distributed construction performance. Finding peers nodes accounts for the largest portion of the computation.}
     \label{fig:dist_flame}
 \end{figure*}
 
@@ -139,6 +139,6 @@ Digging in to figure \ref{fig:mem_comp} further we see the source of the problem
 \begin{figure*}[t]
     \centering
     \includegraphics[width=\textwidth]{assets/mem_composition.png}
-    \caption{}
+    \caption{A profile of the memory usage in MiB for varying numbers of GPUs, problem sizes, key bits and types. The chart is divided into a solid region which shows the portion of memory dependent on the particle data and the hatched region which shows the overhead unrelated to the memory consumed by particles specifically; this includes Cornerstone's internal data structures.}
     \label{fig:mem_comp}
 \end{figure*}
