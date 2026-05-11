@@ -35,9 +35,7 @@ Informally a space filling curve will take points existing in space and map them
 
 We are interested in two types of space filling curves namely Morton Z-order curves and Hilbert curves. The path of a Morton Z-order curve may be viewed in figure \ref{fig:morton_leaves} and shows the distinct z-pattern. Morton codes are computationally efficient to calculate, requiring just a few bit shifts, but as is also evident visually in figure \ref{fig:morton_leaves} the curve may "jump" octants this may result in unfavorable communication patterns between nodes.
 
-The Hilbert curve on the other hand takes on a compact U shape as seen in figure \ref{fig:hilbert_leaves}. Hilbert codes offer a "compact" mapping which may reduce the cost of communication but come at the cost of increased computational inefficiency requiring $L$ loop iterations, $L$ being the maximal depth of the octree.
-
-In both cases the calculation is a simple elementwise GPU kernel, which does a relatively small number of operations.
+The Hilbert curve on the other hand takes on a compact U shape as seen in figure \ref{fig:hilbert_leaves}. Hilbert codes offer a "compact" mapping which may reduce the cost of communication but come at the cost of increased computational inefficiency. In both cases the calculation is an elementwise GPU kernel.
 
 \begin{figure}[h!]
     \centering

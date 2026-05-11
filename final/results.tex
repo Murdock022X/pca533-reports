@@ -7,7 +7,7 @@ We compared the runtime between local construction and distributed construction 
 
 \subsection{Bottleneck}
 
-A general test to develop a sense of Cornerstone’s internal bottlenecks is done on a single GPU comparing a case with 100 million particles using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately from Figure 4 we see that the sorting and reordering of particle properties is very dominant in this regime, with the computing of the SFCs taking only $\approx 10\%$ of the total build time.
+A general test to develop a sense of Cornerstone’s internal bottlenecks is done on a single GPU comparing a case with 100 million particles using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately from figure \ref{fig:keys_100m} we see that the sorting and reordering of particle properties is very dominant in this regime, with the computing of the SFCs taking only $\approx 10\%$ of the total build time.
 
 This is to be expected, as mentioned in \ref{sec:cornerstone}, computation of SFCs for particles and the subsequent sorting and reordering operates on the total number of particles which is typically much greater than the number of nodes in the octree assuming $N_{crit}$ is greater than 1, so the first part of the build has more work to do. This aligns with results from Keller et al. ~\cite{cornerstone} when they profile Cornerstone. Their A100 profile is given below. The benchmark from their paper matches our breakdown here with Radix sort dominating although they do not consider the time to do gather’s of particle properties to match the new layout.
 
@@ -35,7 +35,7 @@ This is to be expected, as mentioned in \ref{sec:cornerstone}, computation of SF
  \hline
  Leaf Update & 0.11 ms & 0.51 ms & 2.5 ms \\
  \hline
- Interal Nodes & 0.19 ms & 0.65 ms & 5.4 ms \\ [1ex] 
+ Internal Nodes & 0.19 ms & 0.65 ms & 5.4 ms \\ [1ex] 
  \hline
 \end{tabular}
 \end{table}
@@ -118,14 +118,14 @@ The perturbations have varying effectiveness depending on the initial distributi
 
 An important aspect of Cornerstone is that it supports distributed processing via domain decomposition and locally essential trees as mentioned in \ref{sec:cornerstone}. We are interested in the overheads associated with building octrees which are partitioned across disaggregated memory modules. This has the benefit of being able to scale out and enables multiple GPUs to work on very large problems that could never fit into a single GPUs memory at once. One difference of note between our work and the problem that Cornerstone ~\cite{cornerstone} is designed to solve is scale, Cornerstone's original purpose is smoothed particle hydrodynamics on exa-scale supercomputers, we are working on a single node on 1-4 GPUs. This difference in scale is likely to expose scalability issues different from the ones the authors needed to consider within the context of their work.
 
-Similarly to the local case, we profiled the distributed method to gauge where bottlenecks were. Figure \ref{fig:dist_flame} shows that a majority of the computation time was spent finding peer ranks, which is a CPU side computation. What is notable is that the communication cost was negligible. This is likely because of the small amount of GPUs tested on because NVLINK was able to greatly lower communication overhead.
+Similarly to the local case, we profiled the distributed method to gauge where bottlenecks were. A flamegraph revealed that a majority of the computation time was spent finding peer ranks, which is a CPU side computation. What is notable is that the communication cost was negligible. This is likely because of the small amount of GPUs tested on because NVLINK was able to greatly lower communication overhead.
 
-\begin{figure*}[t]
-    \centering
-    \includegraphics[width=\textwidth]{assets/flame_dist.png}
-    \caption{Flame graph profile of distributed construction performance. Finding peers nodes accounts for the largest portion of the computation.}
-    \label{fig:dist_flame}
-\end{figure*}
+% \begin{figure*}[t]
+%     \centering
+%     \includegraphics[width=\textwidth]{assets/flame_dist.png}
+%     \caption{Flame graph profile of distributed construction performance. Finding peers nodes accounts for the largest portion of the computation.}
+%     \label{fig:dist_flame}
+% \end{figure*}
 
 We observed the weak scaling of Cornerstone in figure \ref{fig:local_dist} for every combination of configuration options for numbers of particles between 1 million and 100 million; the configuration options included the space filling curve type being either Hilbert or Morton, the number of bits per key being either 32-bits or 64-bits, and the number of GPUs used being either the single GPU local case, or decomposed using 2 or 4 GPUs. In every case the local construction was between 1-2 orders of magnitude faster; this difference in performance is large enough that we can conclude that there is no performance advantage of using distributed construction over local when it is possible to fit the particles on a single GPU. Note that we profile up to the 100 million particles mark, if we were to use the GPU DRAM very well and get within some small factor of filling DRAM we could fit at best, $\frac{TotalDRAM}{sizeof(P)}$ as the number of particles a GPU can support. In the case of an A100 with $40 GB$ of memory and the assumption that a particle consumes $32$ bytes of memory tells us we would be able to fit at most $1,342,177,280$ particles. Such a model is far too optimistic as we will see but this serves to show that even with a very optimistic memory model we are within a factor of 10 of the maximum number of particles a GPU can support which should serve to generalize our conclusion to that there is no performance benefit to using distributed if the number of particles is in this domain. As we can see from figure \ref{fig:local_dist} even with 32 bit Morton keys the local case still beats distributed by roughly an order of magnitude. Given this conclusion the question that drives performance in this regime is at what point the GPUs memory is exhausted and how well we can scale the computation out given the overheads implied by using decomposition.
 
