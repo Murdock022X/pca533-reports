@@ -1,4 +1,8 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{adinets2022onesweepfastersignificantdigit}
+{\sc Adinets, A., and Merrill, D.}
+\newblock Onesweep: A faster least significant digit radix sort for gpus, 2022.
 
 \bibitem{lbvh}
 {\sc Apetrei, C.}
@@ -14,6 +18,11 @@
 {\sc Burtscher, M., and Pingali, K.}
 \newblock An efficient {CUDA} implementation of the tree-based {Barnes Hut} n-body algorithm.
 \newblock In {\em GPU Computing Gems Emerald Edition}. Morgan Kaufmann, 2011, ch.~6, pp.~75--92.
+
+\bibitem{mloctree2018}
+{\sc Deng, Z., Wang, L., Han, W., Ranjan, R., and Zomaya, A.~Y.}
+\newblock {G-ML-Octree}: An update-efficient index structure for simulating {3D} moving objects across {GPUs}.
+\newblock {\em IEEE Transactions on Parallel and Distributed Systems 29}, 5 (2018), 1075--1088.
 
 \bibitem{karras}
 {\sc Karras, T.}
@@ -34,11 +43,6 @@
 {\sc Sundar, H., Sampath, R.~S., and Biros, G.}
 \newblock Bottom-up construction and 2:1 balance refinement of linear octrees in parallel.
 \newblock {\em SIAM Journal on Scientific Computing 30}, 5 (2008), 2675--2708.
-
-\bibitem{mloctree2022}
-{\sc Wang, M., et~al.}
-\newblock {G-ML-Octree}: An update-efficient index structure for simulating {3D} moving objects across {GPUs}.
-\newblock {\em Newcastle University ePrints\/} (2022).
 
 \bibitem{warren1993}
 {\sc Warren, M.~S., and Salmon, J.~K.}

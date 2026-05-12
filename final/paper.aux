@@ -4,22 +4,23 @@
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{cornerstone}
 \citation{cornerstone}
+\citation{cornerstone}
 \@writefile{toc}{\contentsline {section}{Abstract}{1}{section*.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \newlabel{sec:introduction}{{1}{1}{Introduction}{section.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Cornerstone}{1}{section.2}\protected@file@percent }
 \newlabel{sec:cornerstone}{{2}{1}{Cornerstone}{section.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Cornerstone Parameters}}{1}{table.caption.3}\protected@file@percent }
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:my_table}{{1}{1}{Cornerstone Parameters}{table.caption.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Space Filling Curves}{1}{subsection.2.1}\protected@file@percent }
 \citation{cornerstone}
 \citation{cornerstone}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The leaves of an octree colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves.}}{2}{figure.caption.4}\protected@file@percent }
-\newlabel{fig:morton_leaves}{{1}{2}{The leaves of an octree colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves}{figure.caption.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Cornerstone Parameters}}{2}{table.caption.3}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:my_table}{{1}{2}{Cornerstone Parameters}{table.caption.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves. Note the jump between different octants which causes issues in communication.}}{2}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:morton_leaves}{{1}{2}{The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Morton Z-order curve. The red trace plots the curves path through the leaves. Note the jump between different octants which causes issues in communication}{figure.caption.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves. Note that the jump that occurs in \ref {fig:morton_leaves} disappears leading to a compact domain.}}{2}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:hilbert_leaves}{{2}{2}{The leaves of an octree for a uniform distribution on the unit cube, colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves. Note that the jump that occurs in \ref {fig:morton_leaves} disappears leading to a compact domain}{figure.caption.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Radix Sorting and Gathers}{2}{subsection.2.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The leaves of an octree colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves.}}{2}{figure.caption.5}\protected@file@percent }
-\newlabel{fig:hilbert_leaves}{{2}{2}{The leaves of an octree colored with respect to their Hilbert curve. The red trace plots the Hilbert curve path through the leaves}{figure.caption.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Update Leaf Nodes}{2}{subsection.2.3}\protected@file@percent }
 \citation{cornerstone}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Update Internal Nodes}{3}{subsection.2.4}\protected@file@percent }
@@ -28,68 +29,83 @@
 \citation{cornerstone}
 \citation{cornerstone}
 \citation{cornerstone}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Cornerstone Analysis}{4}{section.3}\protected@file@percent }
-\newlabel{sec:analysis}{{3}{4}{Cornerstone Analysis}{section.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Performance Methodology}{4}{section.3}\protected@file@percent }
+\newlabel{sec:analysis}{{3}{4}{Performance Methodology}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Code}{4}{subsection.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Distribution Generators}{4}{subsection.3.2}\protected@file@percent }
 \citation{cornerstone}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Distribution Generators}{5}{subsection.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Perturbation Model}{5}{subsection.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Runtime Configuration}{5}{subsection.3.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Test Configurations}{5}{subsection.3.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Machines}{5}{subsection.3.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Results}{5}{section.4}\protected@file@percent }
 \newlabel{sec:results}{{4}{5}{Results}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Bottleneck}{5}{subsection.4.1}\protected@file@percent }
+\citation{cornerstone}
+\citation{cornerstone}
+\citation{cornerstone}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Initial particle distributions with $10^8$ particles.}}{6}{figure.caption.6}\protected@file@percent }
 \newlabel{fig:initial_distributions}{{3}{6}{Initial particle distributions with $10^8$ particles}{figure.caption.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Original Cornerstone profile on an A100 GPU, adapted from \nonbreakingspace \citep  {cornerstone}.}}{6}{table.caption.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Vector Datatypes for Kernel Fusion}{6}{subsection.4.2}\protected@file@percent }
+\newlabel{subsec:vd_kf_opt}{{4.2}{6}{Vector Datatypes for Kernel Fusion}{subsection.4.2}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Comparison of operations in a broader tree update on a single GPU.}}{6}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:keys_100m}{{4}{6}{Comparison of operations in a broader tree update on a single GPU}{figure.caption.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Construction time of different initial distributions for a low particle workload of n = $10^4$.}}{6}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:gist_10k}{{5}{6}{Construction time of different initial distributions for a low particle workload of n = $10^4$}{figure.caption.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Construction time of different initial distributions for a low particle workload of n = $10^5$.}}{7}{figure.caption.9}\protected@file@percent }
-\newlabel{fig:gist_100k}{{6}{7}{Construction time of different initial distributions for a low particle workload of n = $10^5$}{figure.caption.9}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Construction time of different initial distributions for a high particle workload of n = $10^8$.}}{7}{figure.caption.10}\protected@file@percent }
-\newlabel{fig:gist_100m}{{7}{7}{Construction time of different initial distributions for a high particle workload of n = $10^8$}{figure.caption.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a low particle workload of n = $10^4$.}}{7}{figure.caption.11}\protected@file@percent }
-\newlabel{fig:plot_10k}{{8}{7}{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a low particle workload of n = $10^4$}{figure.caption.11}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a high particle workload of n = $10^8$.}}{7}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:plot_100m}{{9}{7}{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a high particle workload of n = $10^8$}{figure.caption.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Performance improvements of optimized sort using vector datatypes over original gather for 100m particles on an A100 GPU.}}{7}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:orig_vs_opt_kt}{{5}{7}{Performance improvements of optimized sort using vector datatypes over original gather for 100m particles on an A100 GPU}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Initial Distributions}{7}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Construction time of different initial distributions for a low particle workload of n = $10^5$.}}{7}{figure.caption.10}\protected@file@percent }
+\newlabel{fig:gist_100k}{{6}{7}{Construction time of different initial distributions for a low particle workload of n = $10^5$}{figure.caption.10}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Construction time of different initial distributions for a high particle workload of n = $10^8$.}}{7}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:gist_100m}{{7}{7}{Construction time of different initial distributions for a high particle workload of n = $10^8$}{figure.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Perturbations}{7}{subsection.4.4}\protected@file@percent }
+\citation{cornerstone}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a low particle workload of n = $10^4$.}}{8}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:plot_10k}{{8}{8}{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a low particle workload of n = $10^4$}{figure.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Performance of Local Build vs. GPU Distributed}{8}{subsection.4.5}\protected@file@percent }
+\newlabel{subsec:local_dist}{{4.5}{8}{Performance of Local Build vs. GPU Distributed}{subsection.4.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a high particle workload of n = $10^8$.}}{8}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:plot_100m}{{9}{8}{Perturbed octree rebalancing time relative to initial build time for different perturbation strengths for a high particle workload of n = $10^8$}{figure.caption.13}{}}
 \citation{karras}
 \citation{lbvh}
 \citation{warren1993}
 \citation{burtscher2011}
 \citation{bedorf2012}
 \citation{sundar2008}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Future Work}{9}{section.5}\protected@file@percent }
+\newlabel{sec:future}{{5}{9}{Future Work}{section.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Related Work}{9}{section.6}\protected@file@percent }
+\newlabel{sec:related_work}{{6}{9}{Related Work}{section.6}{}}
 \citation{lauterbach2009}
 \citation{mloctree2018}
-\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Comparison of locally essential tree build time vs. local only using 10 million particles, Hilbert keys, and a uniform distribution using 2 ranks, each with their own GPU.}}{8}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:plot_lets_local}{{10}{8}{Comparison of locally essential tree build time vs. local only using 10 million particles, Hilbert keys, and a uniform distribution using 2 ranks, each with their own GPU}{figure.caption.13}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Remaining Work}{8}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Related Work}{8}{section.6}\protected@file@percent }
-\newlabel{sec:related_work}{{6}{8}{Related Work}{section.6}{}}
+\citation{adinets2022onesweepfastersignificantdigit}
 \citation{cornerstone}
 \citation{cornerstone}
-\citation{lbvh}
-\citation{karras}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Performance of different numbers of GPUs across different key configurations on an A100 node.}}{10}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:local_dist}{{10}{10}{Performance of different numbers of GPUs across different key configurations on an A100 node}{figure.caption.14}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{10}{section.7}\protected@file@percent }
+\newlabel{sec:conclusion}{{7}{10}{Conclusion}{section.7}{}}
 \bibstyle{acm}
 \bibdata{ref}
-\bibcite{lbvh}{{1}{}{{}}{{}}}
-\bibcite{bedorf2012}{{2}{}{{}}{{}}}
-\bibcite{burtscher2011}{{3}{}{{}}{{}}}
-\bibcite{karras}{{4}{}{{}}{{}}}
-\bibcite{cornerstone}{{5}{}{{}}{{}}}
-\bibcite{lauterbach2009}{{6}{}{{}}{{}}}
-\bibcite{sundar2008}{{7}{}{{}}{{}}}
-\bibcite{mloctree2022}{{8}{}{{}}{{}}}
-\bibcite{warren1993}{{9}{}{{}}{{}}}
+\bibcite{adinets2022onesweepfastersignificantdigit}{{1}{}{{}}{{}}}
+\bibcite{lbvh}{{2}{}{{}}{{}}}
+\bibcite{bedorf2012}{{3}{}{{}}{{}}}
+\bibcite{burtscher2011}{{4}{}{{}}{{}}}
+\bibcite{mloctree2018}{{5}{}{{}}{{}}}
+\bibcite{karras}{{6}{}{{}}{{}}}
+\bibcite{cornerstone}{{7}{}{{}}{{}}}
+\bibcite{lauterbach2009}{{8}{}{{}}{{}}}
+\bibcite{sundar2008}{{9}{}{{}}{{}}}
+\bibcite{warren1993}{{10}{}{{}}{{}}}
 \newlabel{tocindent-1}{0pt}
 \newlabel{tocindent0}{0pt}
 \newlabel{tocindent1}{4.65pt}
 \newlabel{tocindent2}{11.49998pt}
 \newlabel{tocindent3}{0pt}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{9}{section.7}\protected@file@percent }
-\newlabel{sec:conclusion}{{7}{9}{Conclusion}{section.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Metadata}{9}{section.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{9}{section*.15}\protected@file@percent }
-\newlabel{TotPages}{{9}{9}{}{page.9}{}}
-\gdef \@abspage@last{9}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces A profile of the memory usage in MiB for varying numbers of GPUs, problem sizes, key bits and types. The chart is divided into a solid region which shows the portion of memory dependent on the particle data and the hatched region which shows the overhead unrelated to the memory consumed by particles specifically; this includes Cornerstone's internal data structures.}}{11}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:mem_comp}{{11}{11}{A profile of the memory usage in MiB for varying numbers of GPUs, problem sizes, key bits and types. The chart is divided into a solid region which shows the portion of memory dependent on the particle data and the hatched region which shows the overhead unrelated to the memory consumed by particles specifically; this includes Cornerstone's internal data structures}{figure.caption.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Metadata}{11}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{11}{section*.17}\protected@file@percent }
+\newlabel{TotPages}{{11}{11}{}{page.11}{}}
+\gdef \@abspage@last{11}
