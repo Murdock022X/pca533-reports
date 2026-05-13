@@ -1,7 +1,7 @@
 \section{Results}
 \label{sec:results}
 
-In regards to local constructions, we first explored the performance breakdown between Morton and Hilbert keys. We used this breakdown to apply an optimization to the bottleneck of construction, and profiled the efficacy of such optimization. We also explored the execution time of an initial build versus the subsequent perturbation rebalance for qualitatively different initial distributions.
+In regards to local constructions, we first explored the performance breakdown between Morton and Hilbert keys. We used this breakdown to apply an optimization to the bottleneck of initial construction, and profiled the efficacy of such optimization. We also explored the execution time of an initial build versus the subsequent perturbation rebalance for qualitatively different initial distributions.
 
 We compared the runtime between local construction and distributed construction for a low number of GPUs to assess the tradeoffs between the two methods. The memory usage was also profiled to assess how different factors such as key type and number of GPUs affected it.
 
@@ -9,7 +9,7 @@ We compared the runtime between local construction and distributed construction 
 
 A general test to develop a sense of Cornerstone’s internal bottlenecks is done on a single GPU comparing a case with 100 million particles using either Hilbert or Morton keys. The test loop contains the code to compute the SFC, do a radix sort, reorder the corresponding particle properties, and update the leaves and then internal tree state; these are the steps needed to compute the octree and have it in a usable state. Immediately from figure \ref{fig:keys_100m} we see that the sorting and reordering of particle properties is very dominant in this regime, with the computing of the SFCs taking only $\approx 10\%$ of the total build time.
 
-This is to be expected, as mentioned in \ref{sec:cornerstone}, computation of SFCs for particles and the subsequent sorting and reordering operates on the total number of particles which is typically much greater than the number of nodes in the octree assuming $N_{crit}$ is greater than 1, so the first part of the build has more work to do. This aligns with results from Keller et al. ~\cite{cornerstone} when they profile Cornerstone. Their A100 profile is given below. The benchmark from their paper matches our breakdown here with Radix sort dominating although they do not consider the time to do gathers of particle properties to match the new layout.
+This is expected, as mentioned in \ref{sec:cornerstone}, computation of SFCs for particles and the subsequent sorting and reordering operates on the total number of particles which is typically much greater than the number of nodes in the octree assuming $N_{crit}$ is greater than 1, so the first part of the build has more work to do. This aligns with results from Keller et al. ~\cite{cornerstone} when they profile Cornerstone. Their A100 profile is given in \ref{tab:keller_A100}. The benchmark from their paper matches our breakdown here with Radix sort dominating although they do not consider the time to do gathers of particle properties to match the new layout.
 
 \begin{figure}[h!]
     \centering
@@ -37,6 +37,7 @@ This is to be expected, as mentioned in \ref{sec:cornerstone}, computation of SF
  \hline
  Internal Nodes & 0.19 ms & 0.65 ms & 5.4 ms \\ [1ex] 
  \hline
+\label{tab:keller_A100}
 \end{tabular}
 \end{table}
 
@@ -84,7 +85,7 @@ There is no consistently worst or best initial distribution as can be gleaned fr
 
 \subsection{Perturbations}
 
-To analyze the effects of changes to the particle distributions, we compared the update time of the octree after a perturbation is applied to the initial construction time for each initial distribution. It is clear that for the low particle workloads, perturbations have very little impact on update time as shown in figure \ref{fig:plot_10k}. Only for high particle workloads does the correlation of perturbation strength to relative update speed become significant, as shown in Figure \ref{fig:plot_100m}.
+To analyze the effects of changes to the particle distributions, we compared the update time of the octree after a perturbation is applied to the initial construction time for each initial distribution. It is clear that for low particle workloads, perturbations have very little impact on update time as shown in figure \ref{fig:plot_10k}. Only for high particle workloads does the correlation of perturbation strength to relative update speed become significant, as shown in Figure \ref{fig:plot_100m}.
 
 The perturbations have varying effectiveness depending on the initial distribution to which they are applied. This is likely because the qualities that made the initial distributions quick to compute degrade as perturbation strength increases, and the distribution shifts closer to the uniform distribution. This is bolstered by the fact that the distributions which are most susceptible to perturbations are also the ones that have the lowest initial construction time. This is likely why the uniform distribution is not affected greatly by perturbations until a perturbation level of .5, when the filament distributions see a steady performance decrease at increasing perturbation levels. It is important to note that a relative execution time greater than 100\% does not mean updating the octree is slower than reconstructing it from scratch as the perturbed distribution may still take longer to generate from scratch.
 
