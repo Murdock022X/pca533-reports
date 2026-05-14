@@ -33,7 +33,7 @@ Additionally, Cornerstone has 6 critical parameters which are tabulated in figur
 
 Informally, a space filling curve (SFC) will take points existing in space and map them to integer keys. When the original particles are sorted based on these keys and one traverses the path through them the resulting curve will recursively move through the domain octant by octant (in the case of three dimensional points). In this way, a space filling curve is a kind of fractal.
 
-We are interested in two types of space filling curves namely Morton Z-order curves and Hilbert curves. The path of a Morton Z-order curve may be viewed in figure \ref{fig:morton_leaves} and shows the distinct z-pattern. Morton codes are computationally efficient to calculate, requiring just a few bit shifts, but as is also evident visually in figure \ref{fig:morton_leaves} the curve may "jump" octants. This may result in unfavorable communication patterns between nodes.
+We are interested in two types of space filling curves: Morton Z-order curves and Hilbert curves. The path of a Morton Z-order curve may be viewed in figure \ref{fig:morton_leaves} and shows the distinct z-pattern. Morton codes are computationally efficient to calculate, requiring just a few bit shifts, but as is also evident visually in figure \ref{fig:morton_leaves} the curve may "jump" octants. This may result in unfavorable communication patterns between nodes.
 
 The Hilbert curve on the other hand takes on a U shape as seen in figure \ref{fig:hilbert_leaves}. Hilbert codes offer a "compact" mapping which may reduce the cost of communication but come at the cost of increased work to calculate the keys. In both cases the calculation is an element-wise GPU kernel.
 
