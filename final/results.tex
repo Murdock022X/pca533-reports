@@ -58,9 +58,7 @@ Another way to improve bandwidth is to use vector datatypes which allow one to g
 
 \subsection{Initial Distributions}
 
-For assessing the overall runtime of initial construction on qualitatively different distributions, there is a stark distinction of behavior between low particle count (1 million and less) and high particle count (10 million and more) workloads. The runtime of low particle workloads either is not correlated to the initial distribution, with each particle count’s runtime distribution varying significantly. However, a consistent pattern emerges across high particle workloads, which is shown in Figure \ref{fig:gist_100m}. Here we can see that, generally, lower dimension distributions have lower construction cost associated with them.
-
-There is no consistently worst or best initial distribution as can be gleaned from figures \ref{fig:gist_100k}, and \ref{fig:gist_100m}. This is somewhat surprising, the author of Cornerstone, Keller mentioned that filaments and pancakes were difficult distributions for Cornerstone to process efficiently due to the large amounts of space that may be wasted in dividing the octants.
+For assessing the overall runtime of initial construction on qualitatively different distributions, there is a stark distinction of behavior between low particle count (1 million and less) and high particle count (10 million and more) workloads. The runtime of low particle workloads either is not correlated to the initial distribution, with each particle count’s runtime distribution varying significantly. However, a consistent pattern emerges across high particle workloads, which is shown in Figure \ref{fig:gist_100m}. Here we can see that, generally, lower dimension distributions have lower construction cost associated with them. This is somewhat surprising, the author of Cornerstone, Keller mentioned that filaments and pancakes were difficult distributions for Cornerstone to process efficiently due to the large amounts of space that may be wasted in dividing the octants.
 
 %\begin{figure}[h!]
 %    \centering
